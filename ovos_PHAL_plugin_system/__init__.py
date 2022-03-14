@@ -2,9 +2,20 @@ from ovos_plugin_manager.phal import PHALPlugin
 from ovos_utils.system import system_shutdown, system_reboot, ssh_enable, ssh_disable, ntp_sync
 
 
+class SystemEventsValidator:
+    @staticmethod
+    def validate(config=None):
+        """ this method is called before loading the plugin.
+        If it returns False the plugin is not loaded.
+        This allows a plugin to run platform checks"""
+        return True
+
+
 class SystemEvents(PHALPlugin):
-    def __init__(self, bus=None):
-        super().__init__(bus, "system")
+    validator = SystemEventsValidator
+
+    def __init__(self, bus=None, config=None):
+        super().__init__(bus=bus, name="ovos-PHAL-plugin-system", config=config)
         self.bus.on("system.ntp.sync", self.handle_ntp_sync_request)
         self.bus.on("system.ssh.enable", self.handle_ssh_enable_request)
         self.bus.on("system.ssh.disable", self.handle_ssh_disable_request)
