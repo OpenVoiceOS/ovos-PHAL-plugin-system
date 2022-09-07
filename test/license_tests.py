@@ -22,7 +22,7 @@ allow_unknown = False
 allow_unlicense = True
 allow_ambiguous = False
 
-pkg_name = "ovos-phal-ipc2bus"
+pkg_name = "ovos-phal-plugin-system"
 
 
 class TestLicensing(unittest.TestCase):
