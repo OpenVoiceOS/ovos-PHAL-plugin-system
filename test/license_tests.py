@@ -10,7 +10,8 @@ license_overrides = {
     'yt-dlp': "Unlicense",
     'pyxdg': 'GPL-2.0',
     'ptyprocess': 'ISC license',
-    'psutil': 'BSD3'
+    'psutil': 'BSD3',
+    'python-dateutil': 'Apache-2.0'
 }
 # explicitly allow these packages that would fail otherwise
 whitelist = []
@@ -22,7 +23,7 @@ allow_unknown = False
 allow_unlicense = True
 allow_ambiguous = False
 
-pkg_name = "ovos-phal-ipc2bus"
+pkg_name = "ovos-phal-plugin-system"
 
 
 class TestLicensing(unittest.TestCase):
