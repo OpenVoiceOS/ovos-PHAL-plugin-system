@@ -1,5 +1,5 @@
 from ovos_plugin_manager.phal import PHALPlugin
-from ovos_utils.system import system_shutdown, system_reboot, ssh_enable, ssh_disable, ntp_sync, restart_mycroft_service
+from ovos_utils.system import system_shutdown, system_reboot, ssh_enable, ssh_disable, ntp_sync, restart_service
 
 
 class SystemEventsValidator:
@@ -23,6 +23,7 @@ class SystemEvents(PHALPlugin):
         self.bus.on("system.shutdown", self.handle_shutdown_request)
         self.bus.on("system.mycroft.service.restart",
                     self.handle_mycroft_restart_request)
+        self.service_name = config.get("core_service") or "mycroft.service"
 
     def handle_ssh_enable_request(self, message):
         ssh_enable()
@@ -41,7 +42,7 @@ class SystemEvents(PHALPlugin):
         system_shutdown()
 
     def handle_mycroft_restart_request(self, message):
-        restart_mycroft_service()
+        restart_service(self.service_name)
 
     def shutdown(self):
         self.bus.remove("system.ntp.sync", self.handle_ntp_sync_request)
