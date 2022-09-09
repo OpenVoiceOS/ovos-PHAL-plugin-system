@@ -2,11 +2,15 @@
 
 ## [Unreleased](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/HEAD)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/e2891964fdd97eaee965b332d3fa6413abd2a3a1...HEAD)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.2a2...HEAD)
 
 **Merged pull requests:**
 
 - add event for mycroft service restart [\#2](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/2) ([AIIX](https://github.com/AIIX))
+
+## [V0.0.2a2](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V0.0.2a2) (2022-09-08)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/e2891964fdd97eaee965b332d3fa6413abd2a3a1...V0.0.2a2)
 
 
 
