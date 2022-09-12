@@ -2,15 +2,28 @@
 
 ## [Unreleased](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/HEAD)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.2a2...HEAD)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.2a3...HEAD)
 
 **Merged pull requests:**
 
-- add event for mycroft service restart [\#2](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/2) ([AIIX](https://github.com/AIIX))
+- Update PyPI Action name and action spec [\#5](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/5) ([NeonDaniel](https://github.com/NeonDaniel))
+
+## [V0.0.2a3](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V0.0.2a3) (2022-09-09)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.2a2...V0.0.2a3)
+
+**Merged pull requests:**
+
+- Make core service name configurable [\#4](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/4) ([NeonDaniel](https://github.com/NeonDaniel))
 
 ## [V0.0.2a2](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V0.0.2a2) (2022-09-08)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/e2891964fdd97eaee965b332d3fa6413abd2a3a1...V0.0.2a2)
+
+**Merged pull requests:**
+
+- Add PyPI and versioning automation scripts and workflows [\#3](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/3) ([NeonDaniel](https://github.com/NeonDaniel))
+- add event for mycroft service restart [\#2](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/2) ([AIIX](https://github.com/AIIX))
 
 
 
