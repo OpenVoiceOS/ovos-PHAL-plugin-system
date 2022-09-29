@@ -1,5 +1,9 @@
+import os
 from ovos_plugin_manager.phal import PHALPlugin
 from ovos_utils.system import system_shutdown, system_reboot, ssh_enable, ssh_disable, ntp_sync, restart_service
+from ovos_config.locale import set_default_lang
+from ovos_config.config import update_mycroft_config
+from mycroft_bus_client import Message
 
 
 class SystemEventsValidator:
@@ -21,6 +25,7 @@ class SystemEvents(PHALPlugin):
         self.bus.on("system.ssh.disable", self.handle_ssh_disable_request)
         self.bus.on("system.reboot", self.handle_reboot_request)
         self.bus.on("system.shutdown", self.handle_shutdown_request)
+        self.bus.on("system.configure.language", self.handle_configure_language_request)
         self.bus.on("system.mycroft.service.restart",
                     self.handle_mycroft_restart_request)
         self.service_name = config.get("core_service") or "mycroft.service"
@@ -41,6 +46,17 @@ class SystemEvents(PHALPlugin):
     def handle_shutdown_request(self, message):
         system_shutdown()
 
+    def handle_configure_language_request(self, message):
+        language_code = message.data.get('language_code', "en_US")
+        with open(f"{os.environ['HOME']}/.bash_profile", "w") as bash_profile_file:
+            bash_profile_file.write(f"export LANG={language_code}\n")
+
+        language_code = language_code.lower().replace("_", "-")
+        set_default_lang(language_code)
+        update_mycroft_config({"lang": language_code}, bus=self.bus)
+        self.bus.emit(Message('system.configure.language.complete',
+                              {"lang": language_code}))
+
     def handle_mycroft_restart_request(self, message):
         restart_service(self.service_name)
 
@@ -50,4 +66,6 @@ class SystemEvents(PHALPlugin):
         self.bus.remove("system.ssh.disable", self.handle_ssh_disable_request)
         self.bus.remove("system.reboot", self.handle_reboot_request)
         self.bus.remove("system.shutdown", self.handle_shutdown_request)
+        self.bus.remove("system.configure.language", self.handle_configure_language_request)
+        self.bus.remove("system.mycroft.service.restart", self.handle_mycroft_restart_request)
         super().shutdown()
