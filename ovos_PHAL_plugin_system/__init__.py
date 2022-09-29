@@ -2,6 +2,7 @@ import os
 from ovos_plugin_manager.phal import PHALPlugin
 from ovos_utils.system import system_shutdown, system_reboot, ssh_enable, ssh_disable, ntp_sync, restart_service
 from ovos_config.locale import set_default_lang
+from ovos_config.config import update_mycroft_config
 from mycroft_bus_client import Message
 
 
@@ -47,11 +48,14 @@ class SystemEvents(PHALPlugin):
 
     def handle_configure_language_request(self, message):
         language_code = message.data.get('language_code', "en_US")
-        bash_profile_file = open(f"{os.environ['HOME']}/.bash_profile", "w")
-        bash_profile_file.write(f"export LANG={language_code}\n")
-        bash_profile_file.close()
+        with open(f"{os.environ['HOME']}/.bash_profile", "w") as bash_profile_file:
+            bash_profile_file.write(f"export LANG={language_code}\n")
+
+        language_code = language_code.lower().replace("_", "-")
         set_default_lang(language_code)
-        self.bus.emit(Message('system.configure.language.complete'))
+        update_mycroft_config({"lang": language_code}, bus=self.bus)
+        self.bus.emit(Message('system.configure.language.complete',
+                              {"lang": language_code}))
 
     def handle_mycroft_restart_request(self, message):
         restart_service(self.service_name)
