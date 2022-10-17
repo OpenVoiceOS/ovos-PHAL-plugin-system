@@ -37,9 +37,17 @@ class SystemEvents(PHALPlugin):
 
     def handle_ssh_enable_request(self, message):
         ssh_enable()
+        page = join(dirname(__file__), "ui", "SSH.qml")
+        self.gui["status"] = "Enabled"
+        self.gui["label"] = "SSH Enabled"
+        self.gui.show_page(page)
 
     def handle_ssh_disable_request(self, message):
         ssh_disable()
+        page = join(dirname(__file__), "ui", "SSH.qml")
+        self.gui["status"] = "Disabled"
+        self.gui["label"] = "SSH Disabled"
+        self.gui.show_page(page)
 
     def handle_ntp_sync_request(self, message):
         ntp_sync()
