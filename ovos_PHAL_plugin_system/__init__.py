@@ -55,6 +55,13 @@ class SystemEvents(PHALPlugin):
 
     def handle_ntp_sync_request(self, message):
         ntp_sync()
+        # NOTE: this one defaults to False
+        # it is usually part of other groups of actions that may provide their own UI
+        if message.data.get("display", False):
+            page = join(dirname(__file__), "ui", "Status.qml")
+            self.gui["status"] = "Enabled"
+            self.gui["label"] = "Clock updated"
+            self.gui.show_page(page)
         self.bus.emit(message.reply('system.ntp.sync.complete'))
 
     def handle_reboot_request(self, message):
