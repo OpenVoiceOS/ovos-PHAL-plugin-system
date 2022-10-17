@@ -47,12 +47,12 @@ class SystemEvents(PHALPlugin):
 
     def handle_reboot_request(self, message):
         page = join(dirname(__file__), "ui", "Reboot.qml")
-        self.gui.show_page(page, override_animations=True)
+        self.gui.show_page(page, override_animations=True, override_idle=True)
         system_reboot()
 
     def handle_shutdown_request(self, message):
         page = join(dirname(__file__), "ui", "Shutdown.qml")
-        self.gui.show_page(page, override_animations=True)
+        self.gui.show_page(page, override_animations=True, override_idle=True)
         system_shutdown()
 
     def handle_configure_language_request(self, message):
