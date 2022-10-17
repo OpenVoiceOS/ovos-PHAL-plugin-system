@@ -81,6 +81,9 @@ class SystemEvents(PHALPlugin):
                               {"lang": language_code}))
 
     def handle_mycroft_restart_request(self, message):
+        if message.data.get("display", True):
+            page = join(dirname(__file__), "ui", "Restart.qml")
+            self.gui.show_page(page, override_animations=True, override_idle=True)
         restart_service(self.service_name)
 
     def shutdown(self):
