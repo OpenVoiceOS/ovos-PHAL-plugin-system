@@ -1,9 +1,12 @@
 import os
-from ovos_plugin_manager.phal import PHALPlugin
-from ovos_utils.system import system_shutdown, system_reboot, ssh_enable, ssh_disable, ntp_sync, restart_service
-from ovos_config.locale import set_default_lang
-from ovos_config.config import update_mycroft_config
+from os.path import dirname, join
+
 from mycroft_bus_client import Message
+from ovos_config.config import update_mycroft_config
+from ovos_config.locale import set_default_lang
+from ovos_plugin_manager.phal import PHALPlugin
+from ovos_utils.gui import GUIInterface
+from ovos_utils.system import system_shutdown, system_reboot, ssh_enable, ssh_disable, ntp_sync, restart_service
 
 
 class SystemEventsValidator:
@@ -20,6 +23,8 @@ class SystemEvents(PHALPlugin):
 
     def __init__(self, bus=None, config=None):
         super().__init__(bus=bus, name="ovos-PHAL-plugin-system", config=config)
+        self.gui = GUIInterface(bus=self.bus, skill_id=self.name)
+
         self.bus.on("system.ntp.sync", self.handle_ntp_sync_request)
         self.bus.on("system.ssh.enable", self.handle_ssh_enable_request)
         self.bus.on("system.ssh.disable", self.handle_ssh_disable_request)
@@ -41,9 +46,13 @@ class SystemEvents(PHALPlugin):
         self.bus.emit(message.reply('system.ntp.sync.complete'))
 
     def handle_reboot_request(self, message):
+        page = join(dirname(__file__), "ui", "Rebboting.qml")
+        self.gui.show_page(page, override_animations=True)
         system_reboot()
 
     def handle_shutdown_request(self, message):
+        page = join(dirname(__file__), "ui", "Shutdown.qml")
+        self.gui.show_page(page, override_animations=True)
         system_shutdown()
 
     def handle_configure_language_request(self, message):
