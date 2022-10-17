@@ -37,30 +37,36 @@ class SystemEvents(PHALPlugin):
 
     def handle_ssh_enable_request(self, message):
         ssh_enable()
-        page = join(dirname(__file__), "ui", "SSH.qml")
-        self.gui["status"] = "Enabled"
-        self.gui["label"] = "SSH Enabled"
-        self.gui.show_page(page)
+        # ovos-shell does not want to display
+        if message.data.get("display", True):
+            page = join(dirname(__file__), "ui", "SSH.qml")
+            self.gui["status"] = "Enabled"
+            self.gui["label"] = "SSH Enabled"
+            self.gui.show_page(page)
 
     def handle_ssh_disable_request(self, message):
         ssh_disable()
-        page = join(dirname(__file__), "ui", "SSH.qml")
-        self.gui["status"] = "Disabled"
-        self.gui["label"] = "SSH Disabled"
-        self.gui.show_page(page)
+        # ovos-shell does not want to display
+        if message.data.get("display", True):
+            page = join(dirname(__file__), "ui", "SSH.qml")
+            self.gui["status"] = "Disabled"
+            self.gui["label"] = "SSH Disabled"
+            self.gui.show_page(page)
 
     def handle_ntp_sync_request(self, message):
         ntp_sync()
         self.bus.emit(message.reply('system.ntp.sync.complete'))
 
     def handle_reboot_request(self, message):
-        page = join(dirname(__file__), "ui", "Reboot.qml")
-        self.gui.show_page(page, override_animations=True, override_idle=True)
+        if message.data.get("display", True):
+            page = join(dirname(__file__), "ui", "Reboot.qml")
+            self.gui.show_page(page, override_animations=True, override_idle=True)
         system_reboot()
 
     def handle_shutdown_request(self, message):
-        page = join(dirname(__file__), "ui", "Shutdown.qml")
-        self.gui.show_page(page, override_animations=True, override_idle=True)
+        if message.data.get("display", True):
+            page = join(dirname(__file__), "ui", "Shutdown.qml")
+            self.gui.show_page(page, override_animations=True, override_idle=True)
         system_shutdown()
 
     def handle_configure_language_request(self, message):
