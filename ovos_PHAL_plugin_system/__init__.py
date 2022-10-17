@@ -39,7 +39,7 @@ class SystemEvents(PHALPlugin):
         ssh_enable()
         # ovos-shell does not want to display
         if message.data.get("display", True):
-            page = join(dirname(__file__), "ui", "SSH.qml")
+            page = join(dirname(__file__), "ui", "Status.qml")
             self.gui["status"] = "Enabled"
             self.gui["label"] = "SSH Enabled"
             self.gui.show_page(page)
@@ -48,7 +48,7 @@ class SystemEvents(PHALPlugin):
         ssh_disable()
         # ovos-shell does not want to display
         if message.data.get("display", True):
-            page = join(dirname(__file__), "ui", "SSH.qml")
+            page = join(dirname(__file__), "ui", "Status.qml")
             self.gui["status"] = "Disabled"
             self.gui["label"] = "SSH Disabled"
             self.gui.show_page(page)
@@ -77,6 +77,15 @@ class SystemEvents(PHALPlugin):
         language_code = language_code.lower().replace("_", "-")
         set_default_lang(language_code)
         update_mycroft_config({"lang": language_code}, bus=self.bus)
+
+        # NOTE: this one defaults to False
+        # it is usually part of other groups of actions that may provide their own UI
+        if message.data.get("display", False):
+            page = join(dirname(__file__), "ui", "Status.qml")
+            self.gui["status"] = "Enabled"
+            self.gui["label"] = f"Language changed to {language_code}"
+            self.gui.show_page(page)
+
         self.bus.emit(Message('system.configure.language.complete',
                               {"lang": language_code}))
 
