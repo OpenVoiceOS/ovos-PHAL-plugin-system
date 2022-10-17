@@ -46,7 +46,7 @@ class SystemEvents(PHALPlugin):
         self.bus.emit(message.reply('system.ntp.sync.complete'))
 
     def handle_reboot_request(self, message):
-        page = join(dirname(__file__), "ui", "Rebboting.qml")
+        page = join(dirname(__file__), "ui", "Reboot.qml")
         self.gui.show_page(page, override_animations=True)
         system_reboot()
 

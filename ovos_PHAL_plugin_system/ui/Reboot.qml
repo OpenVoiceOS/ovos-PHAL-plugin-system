@@ -41,7 +41,7 @@ Item {
                 loops: Animation.Infinite
                 fillMode: Image.PreserveAspectFit
                 running: true
-                source: Qt.resolvedUrl("animations/installing.json")
+                source: Qt.resolvedUrl("animations/loading.json")
             }
         }
     }
