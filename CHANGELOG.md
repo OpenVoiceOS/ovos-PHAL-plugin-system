@@ -2,11 +2,19 @@
 
 ## [Unreleased](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/HEAD)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.2a5...HEAD)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.2a6...HEAD)
 
 **Implemented enhancements:**
 
 - Add some visual indication of service restart [\#6](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/issues/6)
+- factory reset [\#7](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/7) ([JarbasAl](https://github.com/JarbasAl))
+
+## [V0.0.2a6](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V0.0.2a6) (2022-10-18)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.2a5...V0.0.2a6)
+
+**Implemented enhancements:**
+
 - feat/gui\_animations [\#8](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/8) ([JarbasAl](https://github.com/JarbasAl))
 
 ## [V0.0.2a5](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V0.0.2a5) (2022-09-29)
