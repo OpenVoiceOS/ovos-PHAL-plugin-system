@@ -45,6 +45,7 @@ class SystemEvents(PHALPlugin):
         self.bus.on("system.mycroft.service.restart",
                     self.handle_mycroft_restart_request)
         self.service_name = config.get("core_service") or "mycroft.service"
+        self.use_root = config.get("sudo", True)
 
         self.factory_reset_plugs = []
 
@@ -217,7 +218,7 @@ class SystemEvents(PHALPlugin):
         if message.data.get("display", True):
             page = join(dirname(__file__), "ui", "Restart.qml")
             self.gui.show_page(page, override_animations=True, override_idle=True)
-        restart_service(self.service_name)
+        restart_service(self.service_name, sudo=self.use_root)
 
     def shutdown(self):
         self.bus.remove("system.ntp.sync", self.handle_ntp_sync_request)
