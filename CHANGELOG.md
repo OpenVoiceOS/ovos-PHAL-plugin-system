@@ -2,7 +2,15 @@
 
 ## [Unreleased](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/HEAD)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.2a6...HEAD)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.2a7...HEAD)
+
+**Fixed bugs:**
+
+- fix/ sudo flag [\#10](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/10) ([JarbasAl](https://github.com/JarbasAl))
+
+## [V0.0.2a7](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V0.0.2a7) (2022-10-19)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.2a6...V0.0.2a7)
 
 **Implemented enhancements:**
 
