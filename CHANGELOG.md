@@ -1,8 +1,8 @@
 # Changelog
 
-## [Unreleased](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/HEAD)
+## [V0.0.2a8](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V0.0.2a8) (2022-11-11)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.2a7...HEAD)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.2a7...V0.0.2a8)
 
 **Fixed bugs:**
 
