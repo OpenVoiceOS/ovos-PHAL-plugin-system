@@ -131,8 +131,11 @@ class SystemEvents(PHALPlugin):
             if os.path.isfile(WEB_CONFIG_CACHE):
                 os.remove(WEB_CONFIG_CACHE)
 
+        LOG.debug("Data reset completed")
+
         reset_phal = message.data.get("reset_hardware", True)
         if reset_phal and len(self.factory_reset_plugs):
+            LOG.debug(f"Wait for reset plugins: {self.factory_reset_plugs}")
             reset_plugs = []
             event = Event()
 
@@ -152,6 +155,7 @@ class SystemEvents(PHALPlugin):
         script = message.data.get("script", True)
         if script:
             script = os.path.expanduser(self.config.get("reset_script", ""))
+            LOG.debug(f"Running reset script: {script}")
             if os.path.isfile(script):
                 if self.use_external_factory_reset:
                     self.bus.emit(Message("ovos.shell.exec.factory.reset", {"script": script}))
