@@ -16,6 +16,7 @@ from ovos_utils.gui import GUIInterface
 from ovos_utils.system import system_shutdown, system_reboot, ssh_enable, ssh_disable, ntp_sync, restart_service, \
     is_process_running
 from ovos_utils.xdg_utils import xdg_state_home, xdg_cache_home, xdg_data_home
+from ovos_utils.log import LOG
 
 
 class SystemEventsValidator:
@@ -62,11 +63,21 @@ class SystemEvents(PHALPlugin):
         return external_requested or False
 
     def handle_reset_register(self, message):
+        if not message.data.get("skill_id"):
+            LOG.warning(f"Got registration request without a `skill_id`: "
+                        f"{message.data}")
+            if any((x in message.data for x in ('reset_hardware', 'wipe_cache',
+                                                'wipe_config', 'wipe_data',
+                                                'wipe_logs'))):
+                LOG.warning(f"Deprecated reset request from GUI")
+                self.handle_factory_reset_request(message)
+            return
         sid = message.data["skill_id"]
         if sid not in self.factory_reset_plugs:
             self.factory_reset_plugs.append(sid)
 
     def handle_factory_reset_request(self, message):
+        LOG.debug(f'Factory reset request: {message.data}')
         self.bus.emit(message.forward("system.factory.reset.start"))
         self.bus.emit(message.forward("system.factory.reset.ping"))
 
