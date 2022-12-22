@@ -164,9 +164,10 @@ class SystemEvents(PHALPlugin):
                 else:
                     subprocess.call(script, shell=True)
                     self.bus.emit(message.forward("system.factory.reset.complete"))
-                    reboot = message.data.get("reboot", True)
-                    if reboot:
-                        self.bus.emit(message.forward("system.reboot"))
+
+        reboot = message.data.get("reboot", True)
+        if reboot:
+            self.bus.emit(message.forward("system.reboot"))
 
     def handle_ssh_enable_request(self, message):
         ssh_enable()
