@@ -39,8 +39,8 @@ class SystemEvents(PHALPlugin):
         self.bus.on("system.ssh.disable", self.handle_ssh_disable_request)
         self.bus.on("system.reboot", self.handle_reboot_request)
         self.bus.on("system.shutdown", self.handle_shutdown_request)
-        self.bus.on("system.factory.reset", self.handle_reset_register)
-        self.bus.on("system.factory.reset.register", self.handle_factory_reset_request)
+        self.bus.on("system.factory.reset", self.handle_factory_reset_request)
+        self.bus.on("system.factory.reset.register", self.handle_reset_register)
         self.bus.on("system.configure.language", self.handle_configure_language_request)
         self.bus.on("system.mycroft.service.restart",
                     self.handle_mycroft_restart_request)
