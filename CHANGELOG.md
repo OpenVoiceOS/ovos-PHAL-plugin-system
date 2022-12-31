@@ -1,5 +1,17 @@
 # Changelog
 
+## [Unreleased](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/HEAD)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.2...HEAD)
+
+**Merged pull requests:**
+
+- Fix swapped methods in factory reset/register events [\#11](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/11) ([NeonDaniel](https://github.com/NeonDaniel))
+
+## [V0.0.2](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V0.0.2) (2022-11-11)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.2a8...V0.0.2)
+
 ## [V0.0.2a8](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V0.0.2a8) (2022-11-11)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.2a7...V0.0.2a8)
