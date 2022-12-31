@@ -16,6 +16,7 @@ from ovos_utils.gui import GUIInterface
 from ovos_utils.system import system_shutdown, system_reboot, ssh_enable, ssh_disable, ntp_sync, restart_service, \
     is_process_running
 from ovos_utils.xdg_utils import xdg_state_home, xdg_cache_home, xdg_data_home
+from ovos_utils.log import LOG
 
 
 class SystemEventsValidator:
@@ -39,8 +40,8 @@ class SystemEvents(PHALPlugin):
         self.bus.on("system.ssh.disable", self.handle_ssh_disable_request)
         self.bus.on("system.reboot", self.handle_reboot_request)
         self.bus.on("system.shutdown", self.handle_shutdown_request)
-        self.bus.on("system.factory.reset", self.handle_reset_register)
-        self.bus.on("system.factory.reset.register", self.handle_factory_reset_request)
+        self.bus.on("system.factory.reset", self.handle_factory_reset_request)
+        self.bus.on("system.factory.reset.register", self.handle_reset_register)
         self.bus.on("system.configure.language", self.handle_configure_language_request)
         self.bus.on("system.mycroft.service.restart",
                     self.handle_mycroft_restart_request)
@@ -62,11 +63,21 @@ class SystemEvents(PHALPlugin):
         return external_requested or False
 
     def handle_reset_register(self, message):
+        if not message.data.get("skill_id"):
+            LOG.warning(f"Got registration request without a `skill_id`: "
+                        f"{message.data}")
+            if any((x in message.data for x in ('reset_hardware', 'wipe_cache',
+                                                'wipe_config', 'wipe_data',
+                                                'wipe_logs'))):
+                LOG.warning(f"Deprecated reset request from GUI")
+                self.handle_factory_reset_request(message)
+            return
         sid = message.data["skill_id"]
         if sid not in self.factory_reset_plugs:
             self.factory_reset_plugs.append(sid)
 
     def handle_factory_reset_request(self, message):
+        LOG.debug(f'Factory reset request: {message.data}')
         self.bus.emit(message.forward("system.factory.reset.start"))
         self.bus.emit(message.forward("system.factory.reset.ping"))
 
@@ -120,8 +131,11 @@ class SystemEvents(PHALPlugin):
             if os.path.isfile(WEB_CONFIG_CACHE):
                 os.remove(WEB_CONFIG_CACHE)
 
+        LOG.debug("Data reset completed")
+
         reset_phal = message.data.get("reset_hardware", True)
         if reset_phal and len(self.factory_reset_plugs):
+            LOG.debug(f"Wait for reset plugins: {self.factory_reset_plugs}")
             reset_plugs = []
             event = Event()
 
@@ -141,6 +155,7 @@ class SystemEvents(PHALPlugin):
         script = message.data.get("script", True)
         if script:
             script = os.path.expanduser(self.config.get("reset_script", ""))
+            LOG.debug(f"Running reset script: {script}")
             if os.path.isfile(script):
                 if self.use_external_factory_reset:
                     self.bus.emit(Message("ovos.shell.exec.factory.reset", {"script": script}))
@@ -149,9 +164,10 @@ class SystemEvents(PHALPlugin):
                 else:
                     subprocess.call(script, shell=True)
                     self.bus.emit(message.forward("system.factory.reset.complete"))
-                    reboot = message.data.get("reboot", True)
-                    if reboot:
-                        self.bus.emit(message.forward("system.reboot"))
+
+        reboot = message.data.get("reboot", True)
+        if reboot:
+            self.bus.emit(message.forward("system.reboot"))
 
     def handle_ssh_enable_request(self, message):
         ssh_enable()
