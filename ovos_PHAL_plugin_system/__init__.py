@@ -165,8 +165,8 @@ class SystemEvents(PHALPlugin):
                     subprocess.call(script, shell=True)
                     self.bus.emit(message.forward("system.factory.reset.complete"))
 
-        if message.data.get("reboot"):
-            self.bus.emit(message.forward("system.reboot"))
+        if message.data.get("reboot", True):
+            self.bus.emit(message.forward("system.mycroft.service.restart"))
 
     def handle_ssh_enable_request(self, message):
         ssh_enable()
