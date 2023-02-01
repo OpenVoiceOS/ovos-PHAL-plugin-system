@@ -36,6 +36,7 @@ class SystemEvents(PHALPlugin):
         self.gui = GUIInterface(bus=self.bus, skill_id=self.name)
 
         self.bus.on("system.ntp.sync", self.handle_ntp_sync_request)
+        self.bus.on("system.ssh.status", self.handle_ssh_status)
         self.bus.on("system.ssh.enable", self.handle_ssh_enable_request)
         self.bus.on("system.ssh.disable", self.handle_ssh_disable_request)
         self.bus.on("system.reboot", self.handle_reboot_request)
@@ -46,6 +47,8 @@ class SystemEvents(PHALPlugin):
         self.bus.on("system.mycroft.service.restart",
                     self.handle_mycroft_restart_request)
         self.service_name = config.get("core_service") or "mycroft.service"
+        # In Debian, ssh stays active, but sshd is removed when ssh is disabled
+        self.ssh_service = config.get("ssh_service") or "sshd.service"
         self.use_root = config.get("sudo", True)
 
         self.factory_reset_plugs = []
@@ -244,6 +247,15 @@ class SystemEvents(PHALPlugin):
             page = join(dirname(__file__), "ui", "Restart.qml")
             self.gui.show_page(page, override_animations=True, override_idle=True)
         restart_service(self.service_name, sudo=self.use_root)
+
+    def handle_ssh_status(self, message):
+        """
+        Check SSH service status and
+        """
+        stat = subprocess.run(f"systemctl is-active --quiet {self.ssh_service}",
+                              shell=True).returncode
+        enabled = stat == 0
+        self.bus.emit(message.response(data={'enabled': enabled}))
 
     def shutdown(self):
         self.bus.remove("system.ntp.sync", self.handle_ntp_sync_request)
