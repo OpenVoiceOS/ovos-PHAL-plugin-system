@@ -202,13 +202,22 @@ class SystemEvents(PHALPlugin):
         if message.data.get("display", True):
             page = join(dirname(__file__), "ui", "Reboot.qml")
             self.gui.show_page(page, override_animations=True, override_idle=True)
-        system_reboot()
+
+        script = os.path.expanduser(self.config.get("reboot_script"))
+        if script and os.path.isfile(script):
+            subprocess.call(script, shell=True)
+        else:
+            system_reboot()
 
     def handle_shutdown_request(self, message):
         if message.data.get("display", True):
             page = join(dirname(__file__), "ui", "Shutdown.qml")
             self.gui.show_page(page, override_animations=True, override_idle=True)
-        system_shutdown()
+        script = os.path.expanduser(self.config.get("shutdown_script"))
+        if script and os.path.isfile(script):
+            subprocess.call(script, shell=True)
+        else:
+            system_reboot()
 
     def handle_configure_language_request(self, message):
         language_code = message.data.get('language_code', "en_US")
