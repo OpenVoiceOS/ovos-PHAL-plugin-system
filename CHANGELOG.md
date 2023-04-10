@@ -1,5 +1,17 @@
 # Changelog
 
+## [Unreleased](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/HEAD)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.3...HEAD)
+
+**Merged pull requests:**
+
+- Make shutdown/restart actions configurable [\#9](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/9) ([NeonDaniel](https://github.com/NeonDaniel))
+
+## [V0.0.3](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V0.0.3) (2022-12-31)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.3a1...V0.0.3)
+
 ## [V0.0.3a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V0.0.3a1) (2022-12-31)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.2...V0.0.3a1)
