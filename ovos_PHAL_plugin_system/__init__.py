@@ -148,7 +148,8 @@ class SystemEvents(PHALPlugin):
                     event.set()
 
             self.bus.on("system.factory.reset.phal.complete", on_done)
-            self.bus.emit(message.forward("system.factory.reset.phal"))
+            self.bus.emit(message.forward("system.factory.reset.phal",
+                                          message.data))
             event.wait(timeout=60)
             self.bus.remove("system.factory.reset.phal.complete", on_done)
 
