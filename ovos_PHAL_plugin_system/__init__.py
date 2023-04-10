@@ -13,8 +13,9 @@ from ovos_config.locations import OLD_USER_CONFIG, USER_CONFIG, WEB_CONFIG_CACHE
 from ovos_config.meta import get_xdg_base
 from ovos_plugin_manager.phal import PHALPlugin
 from ovos_utils.gui import GUIInterface
-from ovos_utils.system import system_shutdown, system_reboot, ssh_enable, ssh_disable, ntp_sync, restart_service, \
-    is_process_running
+from ovos_utils.system import system_shutdown, system_reboot, ssh_enable,\
+    ssh_disable, ntp_sync, restart_service, is_process_running, \
+    check_service_active
 from ovos_utils.xdg_utils import xdg_state_home, xdg_cache_home, xdg_data_home
 from ovos_utils.log import LOG
 
@@ -250,11 +251,9 @@ class SystemEvents(PHALPlugin):
 
     def handle_ssh_status(self, message):
         """
-        Check SSH service status and
+        Check SSH service status and emit a response
         """
-        stat = subprocess.run(f"systemctl is-active --quiet {self.ssh_service}",
-                              shell=True).returncode
-        enabled = stat == 0
+        enabled = check_service_active(self.ssh_service)
         self.bus.emit(message.response(data={'enabled': enabled}))
 
     def shutdown(self):
