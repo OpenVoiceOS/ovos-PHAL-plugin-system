@@ -2,7 +2,15 @@
 
 ## [Unreleased](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/HEAD)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.3...HEAD)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.4a1...HEAD)
+
+**Merged pull requests:**
+
+- Add handler to query SSH service status [\#13](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/13) ([NeonDaniel](https://github.com/NeonDaniel))
+
+## [V0.0.4a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V0.0.4a1) (2023-04-10)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.3...V0.0.4a1)
 
 **Merged pull requests:**
 
