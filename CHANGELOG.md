@@ -2,7 +2,15 @@
 
 ## [Unreleased](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/HEAD)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.4a1...HEAD)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.4a2...HEAD)
+
+**Fixed bugs:**
+
+- Pass configuration to GUIInterface [\#16](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/16) ([NeonDaniel](https://github.com/NeonDaniel))
+
+## [V0.0.4a2](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V0.0.4a2) (2023-04-11)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.4a1...V0.0.4a2)
 
 **Merged pull requests:**
 
