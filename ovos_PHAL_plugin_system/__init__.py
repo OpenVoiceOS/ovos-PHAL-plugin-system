@@ -34,7 +34,8 @@ class SystemEvents(PHALPlugin):
 
     def __init__(self, bus=None, config=None):
         super().__init__(bus=bus, name="ovos-PHAL-plugin-system", config=config)
-        self.gui = GUIInterface(bus=self.bus, skill_id=self.name)
+        self.gui = GUIInterface(bus=self.bus, skill_id=self.name,
+                                config=self.config_core.get('gui'))
 
         self.bus.on("system.ntp.sync", self.handle_ntp_sync_request)
         self.bus.on("system.ssh.status", self.handle_ssh_status)
