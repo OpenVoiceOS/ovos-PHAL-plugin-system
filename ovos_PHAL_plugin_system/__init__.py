@@ -5,7 +5,7 @@ from os.path import dirname, join
 from threading import Event
 
 from json_database import JsonStorageXDG, JsonDatabaseXDG
-from mycroft_bus_client import Message
+from ovos_bus_client.message import Message
 from ovos_backend_client.identity import IdentityManager
 from ovos_config.config import update_mycroft_config
 from ovos_config.locale import set_default_lang
