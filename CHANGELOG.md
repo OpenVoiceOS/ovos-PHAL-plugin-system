@@ -2,7 +2,15 @@
 
 ## [Unreleased](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/HEAD)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.4a2...HEAD)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.4a3...HEAD)
+
+**Merged pull requests:**
+
+- Update messagebus dependency [\#17](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/17) ([NeonDaniel](https://github.com/NeonDaniel))
+
+## [V0.0.4a3](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V0.0.4a3) (2023-06-10)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.4a2...V0.0.4a3)
 
 **Fixed bugs:**
 
