@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.0.4a8](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/0.0.4a8) (2023-06-21)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/0.0.4a7...0.0.4a8)
+
+**Merged pull requests:**
+
+- Pass reset message data to plugins to handle specific reset actions [\#15](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/15) ([NeonDaniel](https://github.com/NeonDaniel))
+
 ## [0.0.4a7](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/0.0.4a7) (2023-06-21)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/0.0.4a6...0.0.4a7)
