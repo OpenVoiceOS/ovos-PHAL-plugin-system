@@ -1,8 +1,16 @@
 # Changelog
 
-## [Unreleased](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/HEAD)
+## [0.0.4a6](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/0.0.4a6) (2023-06-21)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.4a4...HEAD)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.4a5...0.0.4a6)
+
+**Merged pull requests:**
+
+- Update automation to shared actions [\#18](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/18) ([NeonDaniel](https://github.com/NeonDaniel))
+
+## [V0.0.4a5](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V0.0.4a5) (2023-06-21)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.4a4...V0.0.4a5)
 
 **Implemented enhancements:**
 
@@ -39,80 +47,6 @@
 **Merged pull requests:**
 
 - Make shutdown/restart actions configurable [\#9](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/9) ([NeonDaniel](https://github.com/NeonDaniel))
-
-## [V0.0.3](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V0.0.3) (2022-12-31)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.3a1...V0.0.3)
-
-## [V0.0.3a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V0.0.3a1) (2022-12-31)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.2...V0.0.3a1)
-
-**Merged pull requests:**
-
-- Fix swapped methods in factory reset/register events [\#11](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/11) ([NeonDaniel](https://github.com/NeonDaniel))
-
-## [V0.0.2](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V0.0.2) (2022-11-11)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.2a8...V0.0.2)
-
-## [V0.0.2a8](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V0.0.2a8) (2022-11-11)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.2a7...V0.0.2a8)
-
-**Fixed bugs:**
-
-- fix/ sudo flag [\#10](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/10) ([JarbasAl](https://github.com/JarbasAl))
-
-## [V0.0.2a7](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V0.0.2a7) (2022-10-19)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.2a6...V0.0.2a7)
-
-**Implemented enhancements:**
-
-- Add some visual indication of service restart [\#6](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/issues/6)
-- factory reset [\#7](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/7) ([JarbasAl](https://github.com/JarbasAl))
-
-## [V0.0.2a6](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V0.0.2a6) (2022-10-18)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.2a5...V0.0.2a6)
-
-**Implemented enhancements:**
-
-- feat/gui\_animations [\#8](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/8) ([JarbasAl](https://github.com/JarbasAl))
-
-## [V0.0.2a5](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V0.0.2a5) (2022-09-29)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.2a4...V0.0.2a5)
-
-**Implemented enhancements:**
-
-- Add support for configuring system and mycroft language [\#1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/1) ([AIIX](https://github.com/AIIX))
-
-## [V0.0.2a4](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V0.0.2a4) (2022-09-12)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.2a3...V0.0.2a4)
-
-**Merged pull requests:**
-
-- Update PyPI Action name and action spec [\#5](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/5) ([NeonDaniel](https://github.com/NeonDaniel))
-
-## [V0.0.2a3](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V0.0.2a3) (2022-09-09)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.0.2a2...V0.0.2a3)
-
-**Merged pull requests:**
-
-- Make core service name configurable [\#4](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/4) ([NeonDaniel](https://github.com/NeonDaniel))
-
-## [V0.0.2a2](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V0.0.2a2) (2022-09-08)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/e2891964fdd97eaee965b332d3fa6413abd2a3a1...V0.0.2a2)
-
-**Merged pull requests:**
-
-- Add PyPI and versioning automation scripts and workflows [\#3](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/3) ([NeonDaniel](https://github.com/NeonDaniel))
-- add event for mycroft service restart [\#2](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/2) ([AIIX](https://github.com/AIIX))
 
 
 
