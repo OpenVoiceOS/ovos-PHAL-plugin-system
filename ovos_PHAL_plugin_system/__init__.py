@@ -226,7 +226,7 @@ class SystemEvents(PHALPlugin):
             self.gui.show_page(page, override_animations=True,
                                override_idle=True)
 
-        script = os.path.expanduser(self.config.get("reboot_script"))
+        script = os.path.expanduser(self.config.get("reboot_script") or "")
         LOG.info(f"Reboot requested. script={script}")
         if script and os.path.isfile(script):
             subprocess.call(script, shell=True)
@@ -238,7 +238,7 @@ class SystemEvents(PHALPlugin):
             page = join(dirname(__file__), "ui", "Shutdown.qml")
             self.gui.show_page(page, override_animations=True,
                                override_idle=True)
-        script = os.path.expanduser(self.config.get("shutdown_script"))
+        script = os.path.expanduser(self.config.get("shutdown_script") or "")
         LOG.info(f"Shutdown requested. script={script}")
         if script and os.path.isfile(script):
             subprocess.call(script, shell=True)
