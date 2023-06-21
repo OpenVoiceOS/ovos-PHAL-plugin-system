@@ -11,9 +11,12 @@ from ovos_config.config import update_mycroft_config
 from ovos_config.locale import set_default_lang
 from ovos_config.locations import OLD_USER_CONFIG, USER_CONFIG, WEB_CONFIG_CACHE
 from ovos_config.meta import get_xdg_base
+
 from ovos_plugin_manager.phal import PHALPlugin
+from ovos_utils import classproperty
 from ovos_utils.gui import GUIInterface
-from ovos_utils.system import system_shutdown, system_reboot, ssh_enable,\
+from ovos_utils.process_utils import RuntimeRequirements
+from ovos_utils.system import system_reboot, ssh_enable,\
     ssh_disable, ntp_sync, restart_service, is_process_running, \
     check_service_active
 from ovos_utils.xdg_utils import xdg_state_home, xdg_cache_home, xdg_data_home
@@ -57,6 +60,15 @@ class SystemEvents(PHALPlugin):
 
         # trigger register events from phal plugins
         self.bus.emit(Message("system.factory.reset.ping"))
+
+    @classproperty
+    def runtime_requirements(self):
+        return RuntimeRequirements(internet_before_load=False,
+                                   network_before_load=False,
+                                   requires_internet=False,
+                                   requires_network=False,
+                                   no_internet_fallback=True,
+                                   no_network_fallback=True)
 
     @property
     def use_external_factory_reset(self):
