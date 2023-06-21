@@ -49,11 +49,20 @@ def required(requirements_file):
         return [pkg for pkg in requirements
                 if pkg.strip() and not pkg.startswith("#")]
 
+
+def get_description():
+    with open(os.path.join(BASEDIR, "readme.md"), "r") as f:
+        long_description = f.read()
+    return long_description
+
+
 PLUGIN_ENTRY_POINT = 'ovos-PHAL-plugin-system=ovos_PHAL_plugin_system:SystemEvents'
 setup(
     name='ovos-PHAL-plugin-system',
     version=get_version(),
     description='A plugin for OpenVoiceOS hardware abstraction layer',
+    long_description=get_description(),
+    long_description_content_type="text/markdown",
     url='https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system',
     author='JarbasAi',
     author_email='jarbasai@mailfence.com',
