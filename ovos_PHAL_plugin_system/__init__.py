@@ -5,16 +5,20 @@ from os.path import dirname, join
 from threading import Event
 
 from json_database import JsonStorageXDG, JsonDatabaseXDG
-from mycroft_bus_client import Message
+from ovos_bus_client.message import Message
 from ovos_backend_client.identity import IdentityManager
 from ovos_config.config import update_mycroft_config
 from ovos_config.locale import set_default_lang
 from ovos_config.locations import OLD_USER_CONFIG, USER_CONFIG, WEB_CONFIG_CACHE
 from ovos_config.meta import get_xdg_base
+
 from ovos_plugin_manager.phal import PHALPlugin
+from ovos_utils import classproperty
 from ovos_utils.gui import GUIInterface
-from ovos_utils.system import system_shutdown, system_reboot, ssh_enable, ssh_disable, ntp_sync, restart_service, \
-    is_process_running
+from ovos_utils.process_utils import RuntimeRequirements
+from ovos_utils.system import system_reboot, system_shutdown, ssh_enable,\
+    ssh_disable, ntp_sync, restart_service, is_process_running, \
+    check_service_active
 from ovos_utils.xdg_utils import xdg_state_home, xdg_cache_home, xdg_data_home
 from ovos_utils.log import LOG
 
@@ -33,25 +37,39 @@ class SystemEvents(PHALPlugin):
 
     def __init__(self, bus=None, config=None):
         super().__init__(bus=bus, name="ovos-PHAL-plugin-system", config=config)
-        self.gui = GUIInterface(bus=self.bus, skill_id=self.name)
+        self.gui = GUIInterface(bus=self.bus, skill_id=self.name,
+                                config=self.config_core.get('gui'))
 
         self.bus.on("system.ntp.sync", self.handle_ntp_sync_request)
+        self.bus.on("system.ssh.status", self.handle_ssh_status)
         self.bus.on("system.ssh.enable", self.handle_ssh_enable_request)
         self.bus.on("system.ssh.disable", self.handle_ssh_disable_request)
         self.bus.on("system.reboot", self.handle_reboot_request)
         self.bus.on("system.shutdown", self.handle_shutdown_request)
         self.bus.on("system.factory.reset", self.handle_factory_reset_request)
         self.bus.on("system.factory.reset.register", self.handle_reset_register)
-        self.bus.on("system.configure.language", self.handle_configure_language_request)
+        self.bus.on("system.configure.language",
+                    self.handle_configure_language_request)
         self.bus.on("system.mycroft.service.restart",
                     self.handle_mycroft_restart_request)
         self.service_name = config.get("core_service") or "mycroft.service"
+        # In Debian, ssh stays active, but sshd is removed when ssh is disabled
+        self.ssh_service = config.get("ssh_service") or "sshd.service"
         self.use_root = config.get("sudo", True)
 
         self.factory_reset_plugs = []
 
         # trigger register events from phal plugins
         self.bus.emit(Message("system.factory.reset.ping"))
+
+    @classproperty
+    def runtime_requirements(self):
+        return RuntimeRequirements(internet_before_load=False,
+                                   network_before_load=False,
+                                   requires_internet=False,
+                                   requires_network=False,
+                                   no_internet_fallback=True,
+                                   no_network_fallback=True)
 
     @property
     def use_external_factory_reset(self):
@@ -148,7 +166,8 @@ class SystemEvents(PHALPlugin):
                     event.set()
 
             self.bus.on("system.factory.reset.phal.complete", on_done)
-            self.bus.emit(message.forward("system.factory.reset.phal"))
+            self.bus.emit(message.forward("system.factory.reset.phal",
+                                          message.data))
             event.wait(timeout=60)
             self.bus.remove("system.factory.reset.phal.complete", on_done)
 
@@ -158,12 +177,15 @@ class SystemEvents(PHALPlugin):
             LOG.debug(f"Running reset script: {script}")
             if os.path.isfile(script):
                 if self.use_external_factory_reset:
-                    self.bus.emit(Message("ovos.shell.exec.factory.reset", {"script": script}))
-                    # OVOS shell will handle all external operations here to exec script
-                    # including sending complete event to whoever is listening
+                    self.bus.emit(Message("ovos.shell.exec.factory.reset",
+                                          {"script": script}))
+                    # OVOS shell will handle all external operations here to
+                    # exec script including sending complete event to whoever
+                    # is listening
                 else:
                     subprocess.call(script, shell=True)
-                    self.bus.emit(message.forward("system.factory.reset.complete"))
+                    self.bus.emit(
+                        message.forward("system.factory.reset.complete"))
 
         reboot = message.data.get("reboot", True)
         if reboot:
@@ -190,7 +212,8 @@ class SystemEvents(PHALPlugin):
     def handle_ntp_sync_request(self, message):
         ntp_sync()
         # NOTE: this one defaults to False
-        # it is usually part of other groups of actions that may provide their own UI
+        # it is usually part of other groups of actions that may
+        # provide their own UI
         if message.data.get("display", False):
             page = join(dirname(__file__), "ui", "Status.qml")
             self.gui["status"] = "Enabled"
@@ -201,18 +224,32 @@ class SystemEvents(PHALPlugin):
     def handle_reboot_request(self, message):
         if message.data.get("display", True):
             page = join(dirname(__file__), "ui", "Reboot.qml")
-            self.gui.show_page(page, override_animations=True, override_idle=True)
-        system_reboot()
+            self.gui.show_page(page, override_animations=True,
+                               override_idle=True)
+
+        script = os.path.expanduser(self.config.get("reboot_script") or "")
+        LOG.info(f"Reboot requested. script={script}")
+        if script and os.path.isfile(script):
+            subprocess.call(script, shell=True)
+        else:
+            system_reboot()
 
     def handle_shutdown_request(self, message):
         if message.data.get("display", True):
             page = join(dirname(__file__), "ui", "Shutdown.qml")
-            self.gui.show_page(page, override_animations=True, override_idle=True)
-        system_shutdown()
+            self.gui.show_page(page, override_animations=True,
+                               override_idle=True)
+        script = os.path.expanduser(self.config.get("shutdown_script") or "")
+        LOG.info(f"Shutdown requested. script={script}")
+        if script and os.path.isfile(script):
+            subprocess.call(script, shell=True)
+        else:
+            system_shutdown()
 
     def handle_configure_language_request(self, message):
         language_code = message.data.get('language_code', "en_US")
-        with open(f"{os.environ['HOME']}/.bash_profile", "w") as bash_profile_file:
+        with open(f"{os.environ['HOME']}/.bash_profile",
+                  "w") as bash_profile_file:
             bash_profile_file.write(f"export LANG={language_code}\n")
 
         language_code = language_code.lower().replace("_", "-")
@@ -220,7 +257,8 @@ class SystemEvents(PHALPlugin):
         update_mycroft_config({"lang": language_code}, bus=self.bus)
 
         # NOTE: this one defaults to False
-        # it is usually part of other groups of actions that may provide their own UI
+        # it is usually part of other groups of actions that may
+        # provide their own UI
         if message.data.get("display", False):
             page = join(dirname(__file__), "ui", "Status.qml")
             self.gui["status"] = "Enabled"
@@ -233,8 +271,16 @@ class SystemEvents(PHALPlugin):
     def handle_mycroft_restart_request(self, message):
         if message.data.get("display", True):
             page = join(dirname(__file__), "ui", "Restart.qml")
-            self.gui.show_page(page, override_animations=True, override_idle=True)
+            self.gui.show_page(page, override_animations=True,
+                               override_idle=True)
         restart_service(self.service_name, sudo=self.use_root)
+
+    def handle_ssh_status(self, message):
+        """
+        Check SSH service status and emit a response
+        """
+        enabled = check_service_active(self.ssh_service)
+        self.bus.emit(message.response(data={'enabled': enabled}))
 
     def shutdown(self):
         self.bus.remove("system.ntp.sync", self.handle_ntp_sync_request)
@@ -242,8 +288,12 @@ class SystemEvents(PHALPlugin):
         self.bus.remove("system.ssh.disable", self.handle_ssh_disable_request)
         self.bus.remove("system.reboot", self.handle_reboot_request)
         self.bus.remove("system.shutdown", self.handle_shutdown_request)
-        self.bus.remove("system.factory.reset", self.handle_factory_reset_request)
-        self.bus.remove("system.factory.reset.register", self.handle_reset_register)
-        self.bus.remove("system.configure.language", self.handle_configure_language_request)
-        self.bus.remove("system.mycroft.service.restart", self.handle_mycroft_restart_request)
+        self.bus.remove("system.factory.reset",
+                        self.handle_factory_reset_request)
+        self.bus.remove("system.factory.reset.register",
+                        self.handle_reset_register)
+        self.bus.remove("system.configure.language",
+                        self.handle_configure_language_request)
+        self.bus.remove("system.mycroft.service.restart",
+                        self.handle_mycroft_restart_request)
         super().shutdown()
