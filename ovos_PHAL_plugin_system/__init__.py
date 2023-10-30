@@ -213,17 +213,20 @@ class SystemEvents(PHALPlugin):
         # Check to see what service is installed
         if check_service_installed('ntp'):
             ntp_sync()
-        elif check_service_installed('timesync')
+        elif check_service_installed('systemd-timesyncd')
             timesync_sync()
-        # NOTE: this one defaults to False
-        # it is usually part of other groups of actions that may
-        # provide their own UI
-        if message.data.get("display", False):
-            page = join(dirname(__file__), "ui", "Status.qml")
-            self.gui["status"] = "Enabled"
-            self.gui["label"] = "Clock updated"
-            self.gui.show_page(page)
-        self.bus.emit(message.reply('system.ntp.sync.complete'))
+        if check_service_active('ntp') or check_service_active('systemd-timesyncd'):
+            # NOTE: this one defaults to False
+            # it is usually part of other groups of actions that may
+            # provide their own UI
+            if message.data.get("display", False):
+                page = join(dirname(__file__), "ui", "Status.qml")
+                self.gui["status"] = "Enabled"
+                self.gui["label"] = "Clock updated"
+                self.gui.show_page(page)
+            self.bus.emit(message.reply('system.ntp.sync.complete'))
+        else:
+            LOG.debug("No time sync service installed")
 
     def handle_reboot_request(self, message):
         if message.data.get("display", True):
