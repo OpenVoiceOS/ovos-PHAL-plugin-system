@@ -17,8 +17,8 @@ from ovos_utils import classproperty
 from ovos_utils.gui import GUIInterface
 from ovos_utils.process_utils import RuntimeRequirements
 from ovos_utils.system import system_reboot, system_shutdown, ssh_enable,\
-    ssh_disable, ntp_sync, restart_service, is_process_running, \
-    check_service_active
+    ssh_disable, ntp_sync, timesync_sync, restart_service, is_process_running, \
+    check_service_active, check_service_installed
 from ovos_utils.xdg_utils import xdg_state_home, xdg_cache_home, xdg_data_home
 from ovos_utils.log import LOG
 
@@ -210,7 +210,11 @@ class SystemEvents(PHALPlugin):
             self.gui.show_page(page)
 
     def handle_ntp_sync_request(self, message):
-        ntp_sync()
+        # Check to see what service is installed
+        if check_service_installed('ntp'):
+            ntp_sync()
+        elif check_service_installed('timesync')
+            timesync_sync()
         # NOTE: this one defaults to False
         # it is usually part of other groups of actions that may
         # provide their own UI
