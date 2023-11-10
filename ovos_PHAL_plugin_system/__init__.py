@@ -34,7 +34,6 @@ class SystemEventsValidator(PHALValidator):
             # run this plugin in admin mode (as root)
             return False
 
-        # check if nmcli is installed, assume polkit allows non-root usage
         LOG.info("ovos-PHAL-plugin-system running as user")
         return True
 
@@ -302,31 +301,15 @@ class SystemEvents(PHALPlugin):
             page = join(dirname(__file__), "ui", "Restart.qml")
             self.gui.show_page(page, override_animations=True,
                                override_idle=True)
-        user = False
-        sudo = False
-        # NOTE: Can self.core_service_name be used here?
-        # Most mycroft installs are using system services
-        if check_service_installed("mycroft", user=False):
-            service = "mycroft"
-            sudo = True
-        # Check for user install anyway
-        elif check_service_installed("mycroft"):
-            service = "mycroft"
-            user = True
-        # Check for ovos.service
-        # Usually installed a user service
-        elif check_service_installed("ovos"):
-            service = "ovos"
-            user = True
-        # Check for system install anyway
-        elif check_service_installed("ovos", user=False):
-            service = "ovos"
-            sudo = True
-        # Final error log
-        else:
-            LOG.error("No mycroft or ovos service installed")
-            return False
-        restart_service(service, sudo=sudo, user=user)
+        service = self.core_service_name
+        try:
+            restart_service(service, sudo=False, user=True)
+        except:
+            try:
+                restart_service(service, sudo=True, user=False)
+            except:
+                LOG.error("No mycroft or ovos service installed")
+                return False
 
     def handle_ssh_status(self, message):
         """
