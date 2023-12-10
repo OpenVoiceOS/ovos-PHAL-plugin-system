@@ -227,7 +227,7 @@ class SystemEvents(PHALPlugin):
             subprocess.call('service ntp stop', shell=True)
             subprocess.call('ntpd -gq', shell=True)
             subprocess.call('service ntp start', shell=True)
-        elif check_service_installed('systemd-timesyncd')
+        elif check_service_installed('systemd-timesyncd'):
             subprocess.call("systemctl stop systemd-timesyncd", shell=True)
             subprocess.call("systemctl start systemd-timesyncd", shell=True)
         if check_service_active('ntp') or check_service_active('systemd-timesyncd'):
