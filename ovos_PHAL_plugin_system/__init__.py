@@ -14,7 +14,7 @@ from ovos_config.meta import get_xdg_base
 
 from ovos_plugin_manager.phal import PHALPlugin
 from ovos_utils import classproperty
-from ovos_utils.gui import GUIInterface
+from ovos_bus_client.apis.gui import GUIInterface
 from ovos_utils.process_utils import RuntimeRequirements
 from ovos_utils.system import system_reboot, system_shutdown, ssh_enable,\
     ssh_disable, ntp_sync, restart_service, is_process_running, \
