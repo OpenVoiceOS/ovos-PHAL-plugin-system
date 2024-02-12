@@ -12,7 +12,8 @@ from ovos_config.locale import set_default_lang
 from ovos_config.locations import OLD_USER_CONFIG, USER_CONFIG, WEB_CONFIG_CACHE
 from ovos_config.meta import get_xdg_base
 
-from ovos_plugin_manager.phal import AdminPlugin, AdminValidator, PHALPlugin, PHALValidator
+from ovos_plugin_manager.phal import AdminPlugin, PHALPlugin, PHALValidator
+from ovos_plugin_manager.phal.templates.phal import AdminValidator
 from ovos_utils import classproperty
 from ovos_bus_client.apis.gui import GUIInterface
 from ovos_utils.process_utils import RuntimeRequirements
