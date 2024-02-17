@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.0.5a2](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/0.0.5a2) (2024-02-17)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/0.0.5a1...0.0.5a2)
+
+**Implemented enhancements:**
+
+- feat: added option for systemd-timesyncd [\#21](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/21) ([builderjer](https://github.com/builderjer))
+
 ## [0.0.5a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/0.0.5a1) (2024-01-11)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/0.0.4...0.0.5a1)
