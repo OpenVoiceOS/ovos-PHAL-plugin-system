@@ -55,8 +55,8 @@ def get_description():
         long_description = f.read()
     return long_description
 
-
-PLUGIN_ENTRY_POINT = 'ovos-PHAL-plugin-system=ovos_PHAL_plugin_system:SystemEvents'
+PLUGIN_ENTRY_POINT = 'ovos-PHAL-plugin-system=ovos_PHAL_plugin_system:SystemEventsPlugin'
+ADMIN_ENTRY_POINT = 'ovos-PHAL-plugin-system=ovos_PHAL_plugin_system:SystemEventsAdminPlugin'
 setup(
     name='ovos-PHAL-plugin-system',
     version=get_version(),
@@ -79,5 +79,7 @@ setup(
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
     ],
-    entry_points={'ovos.plugin.phal': PLUGIN_ENTRY_POINT}
+entry_points={
+        'ovos.plugin.phal': PLUGIN_ENTRY_POINT,
+        'ovos.plugin.phal.admin': ADMIN_ENTRY_POINT}
 )
