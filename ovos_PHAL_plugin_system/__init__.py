@@ -341,5 +341,5 @@ class SystemEventsAdminValidator(AdminValidator, SystemEventsValidator):
         LOG.info("ovos-PHAL-plugin-system running as root")
         return True
 
-class SystemEventsAdminPlugin(AdminPlugin, SystemEventsPlugin):
+class SystemEventsAdminPlugin(AdminPlugin, SystemEvents):
     validator = SystemEventsAdminValidator
