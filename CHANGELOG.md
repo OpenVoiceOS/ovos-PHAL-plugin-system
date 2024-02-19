@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.0.5a4](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/0.0.5a4) (2024-02-19)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/0.0.5a3...0.0.5a4)
+
+**Fixed bugs:**
+
+- fix/setup\_entrypoint [\#25](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/25) ([builderjer](https://github.com/builderjer))
+
 ## [0.0.5a3](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/0.0.5a3) (2024-02-18)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/0.0.5a2...0.0.5a3)
