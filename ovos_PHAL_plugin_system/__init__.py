@@ -39,7 +39,7 @@ class SystemEventsValidator(PHALValidator):
         return True
 
 
-class SystemEvents(PHALPlugin):
+class SystemEventsPlugin(PHALPlugin):
     validator = SystemEventsValidator
 
     def __init__(self, bus=None, config=None):
