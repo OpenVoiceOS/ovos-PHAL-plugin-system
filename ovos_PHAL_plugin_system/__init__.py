@@ -7,32 +7,39 @@ from threading import Event
 from json_database import JsonStorageXDG, JsonDatabaseXDG
 from ovos_bus_client.message import Message
 from ovos_backend_client.identity import IdentityManager
-from ovos_config.config import update_mycroft_config
+from ovos_config.config import Configuration, update_mycroft_config
 from ovos_config.locale import set_default_lang
 from ovos_config.locations import OLD_USER_CONFIG, USER_CONFIG, WEB_CONFIG_CACHE
 from ovos_config.meta import get_xdg_base
 
-from ovos_plugin_manager.phal import PHALPlugin
+from ovos_plugin_manager.phal import AdminPlugin, PHALPlugin
+from ovos_plugin_manager.templates.phal import PHALValidator, AdminValidator
 from ovos_utils import classproperty
-from ovos_utils.gui import GUIInterface
+from ovos_bus_client.apis.gui import GUIInterface
 from ovos_utils.process_utils import RuntimeRequirements
-from ovos_utils.system import system_reboot, system_shutdown, ssh_enable,\
-    ssh_disable, ntp_sync, restart_service, is_process_running, \
-    check_service_active
+from ovos_utils.system import is_process_running, check_service_active, \
+    check_service_installed, restart_service
 from ovos_utils.xdg_utils import xdg_state_home, xdg_cache_home, xdg_data_home
 from ovos_utils.log import LOG
 
 
-class SystemEventsValidator:
+class SystemEventsValidator(PHALValidator):
     @staticmethod
     def validate(config=None):
         """ this method is called before loading the plugin.
         If it returns False the plugin is not loaded.
         This allows a plugin to run platform checks"""
+        # check if admin plugin is not enabled
+        cfg = Configuration().get("PHAL", {}).get("admin", {})
+        if cfg.get("ovos-PHAL-plugin-system", {}).get("enabled"):
+            # run this plugin in admin mode (as root)
+            return False
+
+        LOG.info("ovos-PHAL-plugin-system running as user")
         return True
 
 
-class SystemEvents(PHALPlugin):
+class SystemEventsPlugin(PHALPlugin):
     validator = SystemEventsValidator
 
     def __init__(self, bus=None, config=None):
@@ -52,7 +59,8 @@ class SystemEvents(PHALPlugin):
                     self.handle_configure_language_request)
         self.bus.on("system.mycroft.service.restart",
                     self.handle_mycroft_restart_request)
-        self.service_name = config.get("core_service") or "mycroft.service"
+
+        self.core_service_name = config.get("core_service") or "ovos.service"
         # In Debian, ssh stays active, but sshd is removed when ssh is disabled
         self.ssh_service = config.get("ssh_service") or "sshd.service"
         self.use_root = config.get("sudo", True)
@@ -192,7 +200,8 @@ class SystemEvents(PHALPlugin):
             self.bus.emit(message.forward("system.reboot"))
 
     def handle_ssh_enable_request(self, message):
-        ssh_enable()
+        subprocess.call(f"systemctl enable {self.ssh_service}", shell=True)
+        subprocess.call(f"systemctl start {self.ssh_service}", shell=True)
         # ovos-shell does not want to display
         if message.data.get("display", True):
             page = join(dirname(__file__), "ui", "Status.qml")
@@ -201,7 +210,8 @@ class SystemEvents(PHALPlugin):
             self.gui.show_page(page)
 
     def handle_ssh_disable_request(self, message):
-        ssh_disable()
+        subprocess.call(f"systemctl stop {self.ssh_service}", shell=True)
+        subprocess.call(f"systemctl disable {self.ssh_service}", shell=True)
         # ovos-shell does not want to display
         if message.data.get("display", True):
             page = join(dirname(__file__), "ui", "Status.qml")
@@ -210,18 +220,34 @@ class SystemEvents(PHALPlugin):
             self.gui.show_page(page)
 
     def handle_ntp_sync_request(self, message):
-        ntp_sync()
-        # NOTE: this one defaults to False
-        # it is usually part of other groups of actions that may
-        # provide their own UI
-        if message.data.get("display", False):
-            page = join(dirname(__file__), "ui", "Status.qml")
-            self.gui["status"] = "Enabled"
-            self.gui["label"] = "Clock updated"
-            self.gui.show_page(page)
-        self.bus.emit(message.reply('system.ntp.sync.complete'))
+        """
+        Force the system clock to synchronize with internet time servers
+        """
+        # Check to see what service is installed
+        if check_service_installed('ntp'):
+            subprocess.call('service ntp stop', shell=True)
+            subprocess.call('ntpd -gq', shell=True)
+            subprocess.call('service ntp start', shell=True)
+        elif check_service_installed('systemd-timesyncd'):
+            subprocess.call("systemctl stop systemd-timesyncd", shell=True)
+            subprocess.call("systemctl start systemd-timesyncd", shell=True)
+        if check_service_active('ntp') or check_service_active('systemd-timesyncd'):
+            # NOTE: this one defaults to False
+            # it is usually part of other groups of actions that may
+            # provide their own UI
+            if message.data.get("display", False):
+                page = join(dirname(__file__), "ui", "Status.qml")
+                self.gui["status"] = "Enabled"
+                self.gui["label"] = "Clock updated"
+                self.gui.show_page(page)
+            self.bus.emit(message.reply('system.ntp.sync.complete'))
+        else:
+            LOG.debug("No time sync service installed")
 
     def handle_reboot_request(self, message):
+        """
+        Shut down and restart the system
+        """
         if message.data.get("display", True):
             page = join(dirname(__file__), "ui", "Reboot.qml")
             self.gui.show_page(page, override_animations=True,
@@ -232,9 +258,12 @@ class SystemEvents(PHALPlugin):
         if script and os.path.isfile(script):
             subprocess.call(script, shell=True)
         else:
-            system_reboot()
+            subprocess.call("systemctl reboot -i", shell=True)
 
     def handle_shutdown_request(self, message):
+        """
+        Turn the system completely off (with no option to inhibit it)
+        """
         if message.data.get("display", True):
             page = join(dirname(__file__), "ui", "Shutdown.qml")
             self.gui.show_page(page, override_animations=True,
@@ -244,7 +273,7 @@ class SystemEvents(PHALPlugin):
         if script and os.path.isfile(script):
             subprocess.call(script, shell=True)
         else:
-            system_shutdown()
+            subprocess.call("systemctl poweroff -i", shell=True)
 
     def handle_configure_language_request(self, message):
         language_code = message.data.get('language_code', "en_US")
@@ -273,7 +302,15 @@ class SystemEvents(PHALPlugin):
             page = join(dirname(__file__), "ui", "Restart.qml")
             self.gui.show_page(page, override_animations=True,
                                override_idle=True)
-        restart_service(self.service_name, sudo=self.use_root)
+        service = self.core_service_name
+        try:
+            restart_service(service, sudo=False, user=True)
+        except:
+            try:
+                restart_service(service, sudo=True, user=False)
+            except:
+                LOG.error("No mycroft or ovos service installed")
+                return False
 
     def handle_ssh_status(self, message):
         """
@@ -297,3 +334,12 @@ class SystemEvents(PHALPlugin):
         self.bus.remove("system.mycroft.service.restart",
                         self.handle_mycroft_restart_request)
         super().shutdown()
+
+class SystemEventsAdminValidator(AdminValidator, SystemEventsValidator):
+    @staticmethod
+    def validate(config=None):
+        LOG.info("ovos-PHAL-plugin-system running as root")
+        return True
+
+class SystemEventsAdminPlugin(AdminPlugin, SystemEventsPlugin):
+    validator = SystemEventsAdminValidator
