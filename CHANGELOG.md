@@ -1,12 +1,16 @@
 # Changelog
 
-## [0.0.5](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/0.0.5) (2024-09-03)
+## [0.0.6a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/0.0.6a1) (2024-09-11)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/0.0.5a5...0.0.5)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/0.0.5a5...0.0.6a1)
 
 **Fixed bugs:**
 
 - Not able to restart services handles by regular a user [\#27](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/issues/27)
+
+**Merged pull requests:**
+
+- feat:semver [\#29](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/29) ([JarbasAl](https://github.com/JarbasAl))
 
 ## [0.0.5a5](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/0.0.5a5) (2024-02-24)
 
