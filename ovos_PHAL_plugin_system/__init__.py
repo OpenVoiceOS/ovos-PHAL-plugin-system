@@ -20,7 +20,7 @@ from ovos_utils.process_utils import RuntimeRequirements
 from ovos_utils.system import is_process_running, check_service_active, \
     check_service_installed, restart_service
 from ovos_utils.xdg_utils import xdg_state_home, xdg_cache_home, xdg_data_home
-from ovos_utils.log import LOG
+from ovos_utils.log import LOG, log_deprecation
 
 
 class SystemEventsValidator(PHALValidator):
@@ -195,9 +195,11 @@ class SystemEventsPlugin(PHALPlugin):
                     self.bus.emit(
                         message.forward("system.factory.reset.complete"))
 
-        reboot = message.data.get("reboot", True)
-        if reboot:
-            self.bus.emit(message.forward("system.reboot"))
+        if message.data.get("reboot", True):
+            if "reboot" not in message.data:
+                log_deprecation("default behavior will skip reboot. Set "
+                                "`message.data['reboot']` explicitly`", "0.1.0")
+            self.bus.emit(message.forward("system.mycroft.service.restart"))
 
     def handle_ssh_enable_request(self, message):
         subprocess.call(f"systemctl enable {self.ssh_service}", shell=True)
