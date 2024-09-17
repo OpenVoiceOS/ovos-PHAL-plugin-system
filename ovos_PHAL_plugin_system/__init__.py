@@ -5,22 +5,21 @@ from os.path import dirname, join
 from threading import Event
 
 from json_database import JsonStorageXDG, JsonDatabaseXDG
-from ovos_bus_client.message import Message
 from ovos_backend_client.identity import IdentityManager
+from ovos_bus_client.apis.gui import GUIInterface
+from ovos_bus_client.message import Message
 from ovos_config.config import Configuration, update_mycroft_config
 from ovos_config.locale import set_default_lang
 from ovos_config.locations import OLD_USER_CONFIG, USER_CONFIG, WEB_CONFIG_CACHE
 from ovos_config.meta import get_xdg_base
-
 from ovos_plugin_manager.phal import AdminPlugin, PHALPlugin
 from ovos_plugin_manager.templates.phal import PHALValidator, AdminValidator
 from ovos_utils import classproperty
-from ovos_bus_client.apis.gui import GUIInterface
+from ovos_utils.log import LOG
 from ovos_utils.process_utils import RuntimeRequirements
 from ovos_utils.system import is_process_running, check_service_active, \
-    check_service_installed, restart_service
+    restart_service
 from ovos_utils.xdg_utils import xdg_state_home, xdg_cache_home, xdg_data_home
-from ovos_utils.log import LOG
 
 
 class SystemEventsValidator(PHALValidator):
@@ -46,8 +45,6 @@ class SystemEventsPlugin(PHALPlugin):
         super().__init__(bus=bus, name="ovos-PHAL-plugin-system", config=config)
         self.gui = GUIInterface(bus=self.bus, skill_id=self.name,
                                 config=self.config_core.get('gui'))
-
-        self.bus.on("system.ntp.sync", self.handle_ntp_sync_request)
         self.bus.on("system.ssh.status", self.handle_ssh_status)
         self.bus.on("system.ssh.enable", self.handle_ssh_enable_request)
         self.bus.on("system.ssh.disable", self.handle_ssh_disable_request)
@@ -219,31 +216,6 @@ class SystemEventsPlugin(PHALPlugin):
             self.gui["label"] = "SSH Disabled"
             self.gui.show_page(page)
 
-    def handle_ntp_sync_request(self, message):
-        """
-        Force the system clock to synchronize with internet time servers
-        """
-        # Check to see what service is installed
-        if check_service_installed('ntp'):
-            subprocess.call('service ntp stop', shell=True)
-            subprocess.call('ntpd -gq', shell=True)
-            subprocess.call('service ntp start', shell=True)
-        elif check_service_installed('systemd-timesyncd'):
-            subprocess.call("systemctl stop systemd-timesyncd", shell=True)
-            subprocess.call("systemctl start systemd-timesyncd", shell=True)
-        if check_service_active('ntp') or check_service_active('systemd-timesyncd'):
-            # NOTE: this one defaults to False
-            # it is usually part of other groups of actions that may
-            # provide their own UI
-            if message.data.get("display", False):
-                page = join(dirname(__file__), "ui", "Status.qml")
-                self.gui["status"] = "Enabled"
-                self.gui["label"] = "Clock updated"
-                self.gui.show_page(page)
-            self.bus.emit(message.reply('system.ntp.sync.complete'))
-        else:
-            LOG.debug("No time sync service installed")
-
     def handle_reboot_request(self, message):
         """
         Shut down and restart the system
@@ -303,6 +275,7 @@ class SystemEventsPlugin(PHALPlugin):
             self.gui.show_page(page, override_animations=True,
                                override_idle=True)
         service = self.core_service_name
+        # TODO - clean up this mess
         try:
             restart_service(service, sudo=False, user=True)
         except:
@@ -320,7 +293,6 @@ class SystemEventsPlugin(PHALPlugin):
         self.bus.emit(message.response(data={'enabled': enabled}))
 
     def shutdown(self):
-        self.bus.remove("system.ntp.sync", self.handle_ntp_sync_request)
         self.bus.remove("system.ssh.enable", self.handle_ssh_enable_request)
         self.bus.remove("system.ssh.disable", self.handle_ssh_disable_request)
         self.bus.remove("system.reboot", self.handle_reboot_request)
@@ -335,11 +307,13 @@ class SystemEventsPlugin(PHALPlugin):
                         self.handle_mycroft_restart_request)
         super().shutdown()
 
+
 class SystemEventsAdminValidator(AdminValidator, SystemEventsValidator):
     @staticmethod
     def validate(config=None):
         LOG.info("ovos-PHAL-plugin-system running as root")
         return True
+
 
 class SystemEventsAdminPlugin(AdminPlugin, SystemEventsPlugin):
     validator = SystemEventsAdminValidator
