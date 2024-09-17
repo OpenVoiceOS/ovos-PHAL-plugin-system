@@ -1,56 +1,16 @@
 # Changelog
 
-## [0.0.6a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/0.0.6a1) (2024-09-11)
+## [1.0.0a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/1.0.0a1) (2024-09-17)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/0.0.5a5...0.0.6a1)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.1.0...1.0.0a1)
 
-**Fixed bugs:**
+**Breaking changes:**
 
-- Not able to restart services handles by regular a user [\#27](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/issues/27)
+- refactor!:deprecate ntp code path [\#31](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/31) ([JarbasAl](https://github.com/JarbasAl))
 
-**Merged pull requests:**
+## [V0.1.0](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V0.1.0) (2024-09-11)
 
-- feat:semver [\#29](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/29) ([JarbasAl](https://github.com/JarbasAl))
-
-## [0.0.5a5](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/0.0.5a5) (2024-02-24)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/0.0.5a4...0.0.5a5)
-
-**Fixed bugs:**
-
-- fix/plugin\_name [\#26](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/26) ([builderjer](https://github.com/builderjer))
-
-## [0.0.5a4](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/0.0.5a4) (2024-02-19)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/0.0.5a3...0.0.5a4)
-
-**Fixed bugs:**
-
-- fix/setup\_entrypoint [\#25](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/25) ([builderjer](https://github.com/builderjer))
-
-## [0.0.5a3](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/0.0.5a3) (2024-02-18)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/0.0.5a2...0.0.5a3)
-
-**Fixed bugs:**
-
-- fix: minimum ovos-utils version [\#23](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/23) ([JarbasAl](https://github.com/JarbasAl))
-
-## [0.0.5a2](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/0.0.5a2) (2024-02-17)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/0.0.5a1...0.0.5a2)
-
-**Implemented enhancements:**
-
-- feat: added option for systemd-timesyncd [\#21](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/21) ([builderjer](https://github.com/builderjer))
-
-## [0.0.5a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/0.0.5a1) (2024-01-11)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/0.0.4...0.0.5a1)
-
-**Merged pull requests:**
-
-- Update dependencies and imports to resolve deprecation warnings [\#22](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/22) ([NeonDaniel](https://github.com/NeonDaniel))
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/0.1.0...V0.1.0)
 
 
 
