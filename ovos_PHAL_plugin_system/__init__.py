@@ -86,8 +86,8 @@ class SystemEventsPlugin(PHALPlugin):
         return external_requested or False
 
     @property
-    def sudo_power(self) -> bool:
-        return self.config.get("use_sudo_for_power") is False
+    def use_sudo_for_power(self) -> bool:
+        return self.config.get("use_sudo_for_power", True)
 
     def handle_reset_register(self, message):
         if not message.data.get("skill_id"):
@@ -235,7 +235,7 @@ class SystemEventsPlugin(PHALPlugin):
             subprocess.call(script, shell=True)
         else:
             command = "systemctl reboot -i"
-            if self.sudo_power:
+            if self.use_sudo_for_power:
                 command = f"sudo {command}"
             subprocess.call(command, shell=True)
 
@@ -253,7 +253,7 @@ class SystemEventsPlugin(PHALPlugin):
             subprocess.call(script, shell=True)
         else:
             command = "systemctl poweroff -i"
-            if self.sudo_power:
+            if self.use_sudo_for_power:
                 command = f"sudo {command}"
             subprocess.call(command, shell=True)
 
