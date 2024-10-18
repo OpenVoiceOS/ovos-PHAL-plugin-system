@@ -85,6 +85,10 @@ class SystemEventsPlugin(PHALPlugin):
             return True
         return external_requested or False
 
+    @property
+    def sudo_power(self) -> bool:
+        return self.config.get("use_sudo_for_power") is False
+
     def handle_reset_register(self, message):
         if not message.data.get("skill_id"):
             LOG.warning(f"Got registration request without a `skill_id`: "
@@ -230,7 +234,10 @@ class SystemEventsPlugin(PHALPlugin):
         if script and os.path.isfile(script):
             subprocess.call(script, shell=True)
         else:
-            subprocess.call("systemctl reboot -i", shell=True)
+            command = "systemctl reboot -i"
+            if self.sudo_power:
+                command = f"sudo {command}"
+            subprocess.call(command, shell=True)
 
     def handle_shutdown_request(self, message):
         """
@@ -245,7 +252,10 @@ class SystemEventsPlugin(PHALPlugin):
         if script and os.path.isfile(script):
             subprocess.call(script, shell=True)
         else:
-            subprocess.call("systemctl poweroff -i", shell=True)
+            command = "systemctl poweroff -i"
+            if self.sudo_power:
+                command = f"sudo {command}"
+            subprocess.call(command, shell=True)
 
     def handle_configure_language_request(self, message):
         language_code = message.data.get('language_code', "en_US")
