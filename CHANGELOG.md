@@ -1,16 +1,20 @@
 # Changelog
 
-## [1.0.0a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/1.0.0a1) (2024-09-17)
+## [1.0.1a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/1.0.1a1) (2024-11-06)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V0.1.0...1.0.0a1)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V1.0.0...1.0.1a1)
 
-**Breaking changes:**
+**Closed issues:**
 
-- refactor!:deprecate ntp code path [\#31](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/31) ([JarbasAl](https://github.com/JarbasAl))
+- Interactive reboot causes Mark2 to hang when rebooting [\#34](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/issues/34)
 
-## [V0.1.0](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V0.1.0) (2024-09-11)
+**Merged pull requests:**
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/0.1.0...V0.1.0)
+- fix: requirements.txt [\#37](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/37) ([JarbasAl](https://github.com/JarbasAl))
+
+## [V1.0.0](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V1.0.0) (2024-09-17)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/1.0.0...V1.0.0)
 
 
 
