@@ -201,28 +201,25 @@ class SystemEventsPlugin(PHALPlugin):
         subprocess.call(f"systemctl start {self.ssh_service}", shell=True)
         # ovos-shell does not want to display
         if message.data.get("display", True):
-            page = join(dirname(__file__), "ui", "Status.qml")
             self.gui["status"] = "Enabled"
             self.gui["label"] = "SSH Enabled"
-            self.gui.show_page(page)
+            self.gui.show_page("Status")
 
     def handle_ssh_disable_request(self, message):
         subprocess.call(f"systemctl stop {self.ssh_service}", shell=True)
         subprocess.call(f"systemctl disable {self.ssh_service}", shell=True)
         # ovos-shell does not want to display
         if message.data.get("display", True):
-            page = join(dirname(__file__), "ui", "Status.qml")
             self.gui["status"] = "Disabled"
             self.gui["label"] = "SSH Disabled"
-            self.gui.show_page(page)
+            self.gui.show_page("Status")
 
     def handle_reboot_request(self, message):
         """
         Shut down and restart the system
         """
         if message.data.get("display", True):
-            page = join(dirname(__file__), "ui", "Reboot.qml")
-            self.gui.show_page(page, override_animations=True,
+            self.gui.show_page("Reboot", override_animations=True,
                                override_idle=True)
 
         script = os.path.expanduser(self.config.get("reboot_script") or "")
@@ -237,8 +234,7 @@ class SystemEventsPlugin(PHALPlugin):
         Turn the system completely off (with no option to inhibit it)
         """
         if message.data.get("display", True):
-            page = join(dirname(__file__), "ui", "Shutdown.qml")
-            self.gui.show_page(page, override_animations=True,
+            self.gui.show_page("Shutdown", override_animations=True,
                                override_idle=True)
         script = os.path.expanduser(self.config.get("shutdown_script") or "")
         LOG.info(f"Shutdown requested. script={script}")
@@ -261,18 +257,16 @@ class SystemEventsPlugin(PHALPlugin):
         # it is usually part of other groups of actions that may
         # provide their own UI
         if message.data.get("display", False):
-            page = join(dirname(__file__), "ui", "Status.qml")
             self.gui["status"] = "Enabled"
             self.gui["label"] = f"Language changed to {language_code}"
-            self.gui.show_page(page)
+            self.gui.show_page("Status")
 
         self.bus.emit(Message('system.configure.language.complete',
                               {"lang": language_code}))
 
     def handle_mycroft_restart_request(self, message):
         if message.data.get("display", True):
-            page = join(dirname(__file__), "ui", "Restart.qml")
-            self.gui.show_page(page, override_animations=True,
+            self.gui.show_page("Restart", override_animations=True,
                                override_idle=True)
         service = self.core_service_name
         # TODO - clean up this mess
