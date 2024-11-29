@@ -44,7 +44,7 @@ class SystemEventsPlugin(PHALPlugin):
     def __init__(self, bus=None, config=None):
         super().__init__(bus=bus, name="ovos-PHAL-plugin-system", config=config)
         self.gui = GUIInterface(bus=self.bus, skill_id=self.name,
-                                ui_directories={"qt5": join(dirname(__file__), "ui)},
+                                ui_directories={"qt5": join(dirname(__file__), "ui")},
                                 config=self.config_core.get('gui'))
         self.bus.on("system.ssh.status", self.handle_ssh_status)
         self.bus.on("system.ssh.enable", self.handle_ssh_enable_request)
