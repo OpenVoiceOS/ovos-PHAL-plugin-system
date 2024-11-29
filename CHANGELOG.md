@@ -1,20 +1,20 @@
 # Changelog
 
-## [1.0.1a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/1.0.1a1) (2024-11-06)
+## [1.0.2a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/1.0.2a1) (2024-11-29)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V1.0.0...1.0.1a1)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V1.0.1...1.0.2a1)
 
 **Closed issues:**
 
-- Interactive reboot causes Mark2 to hang when rebooting [\#34](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/issues/34)
+- Can't restart via GUI [\#39](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/issues/39)
 
 **Merged pull requests:**
 
-- fix: requirements.txt [\#37](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/37) ([JarbasAl](https://github.com/JarbasAl))
+- fix: gui pages [\#40](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/40) ([JarbasAl](https://github.com/JarbasAl))
 
-## [V1.0.0](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V1.0.0) (2024-09-17)
+## [V1.0.1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V1.0.1) (2024-11-06)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/1.0.0...V1.0.0)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/1.0.1...V1.0.1)
 
 
 
