@@ -1,20 +1,16 @@
 # Changelog
 
-## [1.0.2a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/1.0.2a1) (2024-11-29)
+## [1.0.3a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/1.0.3a1) (2024-12-02)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V1.0.1...1.0.2a1)
-
-**Closed issues:**
-
-- Can't restart via GUI [\#39](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/issues/39)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V1.0.2...1.0.3a1)
 
 **Merged pull requests:**
 
-- fix: gui pages [\#40](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/40) ([JarbasAl](https://github.com/JarbasAl))
+- fix: remove deprecated backend client [\#42](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/42) ([JarbasAl](https://github.com/JarbasAl))
 
-## [V1.0.1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V1.0.1) (2024-11-06)
+## [V1.0.2](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V1.0.2) (2024-11-29)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/1.0.1...V1.0.1)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/1.0.2...V1.0.2)
 
 
 
