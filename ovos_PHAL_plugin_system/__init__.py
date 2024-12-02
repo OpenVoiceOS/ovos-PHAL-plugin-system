@@ -5,7 +5,6 @@ from os.path import dirname, join
 from threading import Event
 
 from json_database import JsonStorageXDG, JsonDatabaseXDG
-from ovos_backend_client.identity import IdentityManager
 from ovos_bus_client.apis.gui import GUIInterface
 from ovos_bus_client.message import Message
 from ovos_config.config import Configuration, update_mycroft_config
@@ -104,11 +103,6 @@ class SystemEventsPlugin(PHALPlugin):
         LOG.debug(f'Factory reset request: {message.data}')
         self.bus.emit(message.forward("system.factory.reset.start"))
         self.bus.emit(message.forward("system.factory.reset.ping"))
-
-        if os.path.isfile(IdentityManager.OLD_IDENTITY_FILE):
-            os.remove(IdentityManager.OLD_IDENTITY_FILE)
-        if os.path.isfile(IdentityManager.IDENTITY_FILE):
-            os.remove(IdentityManager.IDENTITY_FILE)
 
         wipe_cache = message.data.get("wipe_cache", True)
         if wipe_cache:
