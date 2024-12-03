@@ -50,6 +50,7 @@ class SystemEventsPlugin(PHALPlugin):
         self.bus.on("system.ssh.disable", self.handle_ssh_disable_request)
         self.bus.on("system.ssh.enabled", self.handle_ssh_enabled)
         self.bus.on("system.ssh.disabled", self.handle_ssh_disabled)
+        self.bus.on("system.clock.synced", self.handle_clock_sync)
         self.bus.on("system.reboot", self.handle_reboot_request)
         self.bus.on("system.reboot.start", self.handle_rebooting)
         self.bus.on("system.shutdown", self.handle_shutdown_request)
@@ -194,13 +195,18 @@ class SystemEventsPlugin(PHALPlugin):
         if reboot:
             self.bus.emit(message.forward("system.reboot"))
 
+    def handle_clock_sync(self, message: Message):
+        if message.data.get("display", True):
+            self.gui["status"] = "Enabled"
+            self.gui["label"] = "Clock Synchronized"
+            self.gui.show_page("Status")
+
     def handle_ssh_enable_request(self, message: Message):
         subprocess.call(f"systemctl enable {self.ssh_service}", shell=True)
         subprocess.call(f"systemctl start {self.ssh_service}", shell=True)
         self.bus.emit(message.forward("system.ssh.enabled", message.data))
 
     def handle_ssh_enabled(self, message: Message):
-        # ovos-shell does not want to display
         if message.data.get("display", True):
             self.gui["status"] = "Enabled"
             self.gui["label"] = "SSH Enabled"
@@ -318,6 +324,7 @@ class SystemEventsPlugin(PHALPlugin):
         self.bus.remove("system.configure.language", self.handle_configure_language_request)
         self.bus.remove("system.mycroft.service.restart", self.handle_mycroft_restart_request)
         self.bus.remove("system.mycroft.service.restart.start", self.handle_mycroft_restarting)
+        self.bus.remove("system.clock.synced", self.handle_clock_sync)
         super().shutdown()
 
 
