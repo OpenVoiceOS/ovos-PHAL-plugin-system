@@ -48,14 +48,18 @@ class SystemEventsPlugin(PHALPlugin):
         self.bus.on("system.ssh.status", self.handle_ssh_status)
         self.bus.on("system.ssh.enable", self.handle_ssh_enable_request)
         self.bus.on("system.ssh.disable", self.handle_ssh_disable_request)
+        self.bus.on("system.ssh.enabled", self.handle_ssh_enabled)
+        self.bus.on("system.ssh.disabled", self.handle_ssh_disabled)
+        self.bus.on("system.clock.synced", self.handle_clock_sync)
         self.bus.on("system.reboot", self.handle_reboot_request)
+        self.bus.on("system.reboot.start", self.handle_rebooting)
         self.bus.on("system.shutdown", self.handle_shutdown_request)
+        self.bus.on("system.shutdown.start", self.handle_shutting_down)
         self.bus.on("system.factory.reset", self.handle_factory_reset_request)
         self.bus.on("system.factory.reset.register", self.handle_reset_register)
-        self.bus.on("system.configure.language",
-                    self.handle_configure_language_request)
-        self.bus.on("system.mycroft.service.restart",
-                    self.handle_mycroft_restart_request)
+        self.bus.on("system.configure.language", self.handle_configure_language_request)
+        self.bus.on("system.mycroft.service.restart", self.handle_mycroft_restart_request)
+        self.bus.on("system.mycroft.service.restart.start", self.handle_mycroft_restarting)
 
         self.core_service_name = config.get("core_service") or "ovos.service"
         # In Debian, ssh stays active, but sshd is removed when ssh is disabled
@@ -85,7 +89,7 @@ class SystemEventsPlugin(PHALPlugin):
             return True
         return external_requested or False
 
-    def handle_reset_register(self, message):
+    def handle_reset_register(self, message: Message):
         if not message.data.get("skill_id"):
             LOG.warning(f"Got registration request without a `skill_id`: "
                         f"{message.data}")
@@ -99,7 +103,7 @@ class SystemEventsPlugin(PHALPlugin):
         if sid not in self.factory_reset_plugs:
             self.factory_reset_plugs.append(sid)
 
-    def handle_factory_reset_request(self, message):
+    def handle_factory_reset_request(self, message: Message):
         LOG.debug(f'Factory reset request: {message.data}')
         self.bus.emit(message.forward("system.factory.reset.start"))
         self.bus.emit(message.forward("system.factory.reset.ping"))
@@ -191,32 +195,48 @@ class SystemEventsPlugin(PHALPlugin):
         if reboot:
             self.bus.emit(message.forward("system.reboot"))
 
-    def handle_ssh_enable_request(self, message):
+    def handle_clock_sync(self, message: Message):
+        if message.data.get("display", True):
+            self.gui["status"] = "Enabled"
+            self.gui["label"] = "Clock Synchronized"
+            self.gui.show_page("Status")
+
+    def handle_ssh_enable_request(self, message: Message):
         subprocess.call(f"systemctl enable {self.ssh_service}", shell=True)
         subprocess.call(f"systemctl start {self.ssh_service}", shell=True)
-        # ovos-shell does not want to display
+        self.bus.emit(message.forward("system.ssh.enabled", message.data))
+
+    def handle_ssh_enabled(self, message: Message):
         if message.data.get("display", True):
             self.gui["status"] = "Enabled"
             self.gui["label"] = "SSH Enabled"
             self.gui.show_page("Status")
 
-    def handle_ssh_disable_request(self, message):
+    def handle_ssh_disable_request(self, message: Message):
         subprocess.call(f"systemctl stop {self.ssh_service}", shell=True)
         subprocess.call(f"systemctl disable {self.ssh_service}", shell=True)
+        self.bus.emit(message.forward("system.ssh.disabled", message.data))
+
+    def handle_ssh_disabled(self, message: Message):
         # ovos-shell does not want to display
         if message.data.get("display", True):
             self.gui["status"] = "Disabled"
             self.gui["label"] = "SSH Disabled"
             self.gui.show_page("Status")
 
-    def handle_reboot_request(self, message):
+    def handle_rebooting(self, message: Message):
         """
-        Shut down and restart the system
+        reboot has started
         """
         if message.data.get("display", True):
             self.gui.show_page("Reboot", override_animations=True,
                                override_idle=True)
 
+    def handle_reboot_request(self, message: Message):
+        """
+        Shut down and restart the system
+        """
+        self.bus.emit(message.forward("system.reboot.start", message.data))
         script = os.path.expanduser(self.config.get("reboot_script") or "")
         LOG.info(f"Reboot requested. script={script}")
         if script and os.path.isfile(script):
@@ -224,13 +244,19 @@ class SystemEventsPlugin(PHALPlugin):
         else:
             subprocess.call("systemctl reboot -i", shell=True)
 
-    def handle_shutdown_request(self, message):
+    def handle_shutting_down(self, message: Message):
         """
-        Turn the system completely off (with no option to inhibit it)
+        shutdown has started
         """
         if message.data.get("display", True):
             self.gui.show_page("Shutdown", override_animations=True,
                                override_idle=True)
+
+    def handle_shutdown_request(self, message: Message):
+        """
+        Turn the system completely off (with no option to inhibit it)
+        """
+        self.bus.emit(message.forward("system.shutdown.start", message.data))
         script = os.path.expanduser(self.config.get("shutdown_script") or "")
         LOG.info(f"Shutdown requested. script={script}")
         if script and os.path.isfile(script):
@@ -238,7 +264,7 @@ class SystemEventsPlugin(PHALPlugin):
         else:
             subprocess.call("systemctl poweroff -i", shell=True)
 
-    def handle_configure_language_request(self, message):
+    def handle_configure_language_request(self, message: Message):
         language_code = message.data.get('language_code', "en_US")
         with open(f"{os.environ['HOME']}/.bash_profile",
                   "w") as bash_profile_file:
@@ -259,11 +285,14 @@ class SystemEventsPlugin(PHALPlugin):
         self.bus.emit(Message('system.configure.language.complete',
                               {"lang": language_code}))
 
-    def handle_mycroft_restart_request(self, message):
+    def handle_mycroft_restarting(self, message: Message):
         if message.data.get("display", True):
             self.gui.show_page("Restart", override_animations=True,
                                override_idle=True)
+
+    def handle_mycroft_restart_request(self, message: Message):
         service = self.core_service_name
+        self.bus.emit(message.forward("system.mycroft.service.restart.start", message.data))
         # TODO - clean up this mess
         try:
             restart_service(service, sudo=False, user=True)
@@ -274,7 +303,7 @@ class SystemEventsPlugin(PHALPlugin):
                 LOG.error("No mycroft or ovos service installed")
                 return False
 
-    def handle_ssh_status(self, message):
+    def handle_ssh_status(self, message: Message):
         """
         Check SSH service status and emit a response
         """
@@ -284,16 +313,18 @@ class SystemEventsPlugin(PHALPlugin):
     def shutdown(self):
         self.bus.remove("system.ssh.enable", self.handle_ssh_enable_request)
         self.bus.remove("system.ssh.disable", self.handle_ssh_disable_request)
+        self.bus.remove("system.ssh.enabled", self.handle_ssh_enabled)
+        self.bus.remove("system.ssh.disabled", self.handle_ssh_disabled)
         self.bus.remove("system.reboot", self.handle_reboot_request)
+        self.bus.remove("system.reboot.start", self.handle_rebooting)
         self.bus.remove("system.shutdown", self.handle_shutdown_request)
-        self.bus.remove("system.factory.reset",
-                        self.handle_factory_reset_request)
-        self.bus.remove("system.factory.reset.register",
-                        self.handle_reset_register)
-        self.bus.remove("system.configure.language",
-                        self.handle_configure_language_request)
-        self.bus.remove("system.mycroft.service.restart",
-                        self.handle_mycroft_restart_request)
+        self.bus.remove("system.shutdown.start", self.handle_shutting_down)
+        self.bus.remove("system.factory.reset", self.handle_factory_reset_request)
+        self.bus.remove("system.factory.reset.register", self.handle_reset_register)
+        self.bus.remove("system.configure.language", self.handle_configure_language_request)
+        self.bus.remove("system.mycroft.service.restart", self.handle_mycroft_restart_request)
+        self.bus.remove("system.mycroft.service.restart.start", self.handle_mycroft_restarting)
+        self.bus.remove("system.clock.synced", self.handle_clock_sync)
         super().shutdown()
 
 
