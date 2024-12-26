@@ -1,24 +1,16 @@
 # Changelog
 
-## [1.2.0a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/1.2.0a1) (2024-12-03)
+## [1.3.0a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/1.3.0a1) (2024-12-26)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/1.1.0a1...1.2.0a1)
-
-**Merged pull requests:**
-
-- feat:clock\_sync\_gui [\#46](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/46) ([JarbasAl](https://github.com/JarbasAl))
-
-## [1.1.0a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/1.1.0a1) (2024-12-03)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V1.0.3...1.1.0a1)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V1.2.0...1.3.0a1)
 
 **Merged pull requests:**
 
-- feat: status events [\#44](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/44) ([JarbasAl](https://github.com/JarbasAl))
+- feat:loading\_status\_templates [\#48](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/48) ([JarbasAl](https://github.com/JarbasAl))
 
-## [V1.0.3](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V1.0.3) (2024-12-02)
+## [V1.2.0](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V1.2.0) (2024-12-03)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/1.0.3...V1.0.3)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/1.2.0...V1.2.0)
 
 
 
