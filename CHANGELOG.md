@@ -1,24 +1,12 @@
 # Changelog
 
-## [1.3.1a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/1.3.1a1) (2025-03-19)
+## [1.3.2a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/1.3.2a1) (2025-03-19)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/1.3.0a1...1.3.1a1)
-
-**Merged pull requests:**
-
-- fix: allow latest ovos-config [\#51](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/51) ([JarbasAl](https://github.com/JarbasAl))
-
-## [1.3.0a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/1.3.0a1) (2024-12-26)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V1.2.0...1.3.0a1)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/1.3.1...1.3.2a1)
 
 **Merged pull requests:**
 
-- feat:loading\_status\_templates [\#48](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/48) ([JarbasAl](https://github.com/JarbasAl))
-
-## [V1.2.0](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V1.2.0) (2024-12-03)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/1.2.0...V1.2.0)
+- fix: automations [\#53](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/53) ([JarbasAl](https://github.com/JarbasAl))
 
 
 
