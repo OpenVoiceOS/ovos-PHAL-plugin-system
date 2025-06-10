@@ -1,12 +1,8 @@
 # Changelog
 
-## [1.3.2a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/1.3.2a1) (2025-03-19)
+## [V1.3.2](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V1.3.2) (2025-03-19)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/1.3.1...1.3.2a1)
-
-**Merged pull requests:**
-
-- fix: automations [\#53](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/53) ([JarbasAl](https://github.com/JarbasAl))
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/1.3.2...V1.3.2)
 
 
 
