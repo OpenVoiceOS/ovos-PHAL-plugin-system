@@ -1,8 +1,8 @@
 # Changelog
 
-## [V1.3.2](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V1.3.2) (2025-03-19)
+## [V1.3.3](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V1.3.3) (2025-06-10)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/1.3.2...V1.3.2)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/1.3.3...V1.3.3)
 
 
 
