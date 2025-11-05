@@ -58,7 +58,7 @@ def get_description():
 PLUGIN_ENTRY_POINT = 'ovos-PHAL-plugin-system=ovos_PHAL_plugin_system:SystemEventsPlugin'
 ADMIN_ENTRY_POINT = 'ovos-PHAL-plugin-system=ovos_PHAL_plugin_system:SystemEventsAdminPlugin'
 setup(
-    name='ovos-PHAL-plugin-system',
+    name='ovos_PHAL_plugin_system',
     version=get_version(),
     description='A plugin for OpenVoiceOS hardware abstraction layer',
     long_description=get_description(),
