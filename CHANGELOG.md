@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.5a2](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/1.3.5a2) (2025-12-19)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/1.3.5a1...1.3.5a2)
+
+**Merged pull requests:**
+
+- Update dependency python to 3.14 [\#60](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/60) ([renovate[bot]](https://github.com/apps/renovate))
+
 ## [1.3.5a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/1.3.5a1) (2025-12-18)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V1.3.4...1.3.5a1)
