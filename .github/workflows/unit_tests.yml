@@ -1,0 +1,8 @@
+name: Unit Tests
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  py_build_tests:
+    uses: OpenVoiceOS/gh-automations/.github/workflows/build-tests.yml@dev
