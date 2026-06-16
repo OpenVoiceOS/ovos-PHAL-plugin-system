@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ovos_PHAL_plugin_system"
+dynamic = ["version"]
+description = "A plugin for OpenVoiceOS hardware abstraction layer"
+readme = "README.md"
+license = {text = "Apache-2.0"}
+authors = [
+    {name = "JarbasAi", email = "jarbasai@mailfence.com"}
+]
+dependencies = [
+    "ovos-plugin-manager>=0.0.26,<3.0.0",
+    "ovos-bus-client>=1.1.0,<3.0.0"
+]
+
+[project.urls]
+Homepage = "https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system"
+
+[project.entry-points."opm.phal"]
+"ovos-PHAL-plugin-system" = "ovos_PHAL_plugin_system:SystemEventsPlugin"
+
+[project.entry-points."opm.phal.admin"]
+"ovos-PHAL-plugin-system" = "ovos_PHAL_plugin_system:SystemEventsAdminPlugin"
+
+[tool.setuptools.dynamic]
+version = {attr = "ovos_PHAL_plugin_system.version.__version__"}
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["ovos_PHAL_plugin_system*"]
