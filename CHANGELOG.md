@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.8a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/1.3.8a1) (2026-06-16)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/1.3.7a2...1.3.8a1)
+
+**Merged pull requests:**
+
+- fix: require ovos-plugin-manager\>=2.1.0 for opm.\* entry points and cap ovos-\* deps at next major [\#68](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/68) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [1.3.7a2](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/1.3.7a2) (2026-06-16)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/1.3.7a1...1.3.7a2)
