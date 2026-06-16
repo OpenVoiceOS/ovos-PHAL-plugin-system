@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.7a2](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/1.3.7a2) (2026-06-16)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/1.3.7a1...1.3.7a2)
+
+**Merged pull requests:**
+
+- chore: add missing shared CI workflows [\#66](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/66) ([JarbasAl](https://github.com/JarbasAl))
+
+## [1.3.7a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/1.3.7a1) (2026-06-06)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/1.3.6a1...1.3.7a1)
+
 ## [1.3.6a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/1.3.6a1) (2026-06-06)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/1.3.5a2...1.3.6a1)
@@ -18,15 +30,11 @@
 
 ## [1.3.5a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/1.3.5a1) (2025-12-18)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V1.3.4...1.3.5a1)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/1.3.4...1.3.5a1)
 
 **Merged pull requests:**
 
 - Configure Renovate [\#59](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/59) ([renovate[bot]](https://github.com/apps/renovate))
-
-## [V1.3.4](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V1.3.4) (2025-11-05)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/1.3.4...V1.3.4)
 
 
 
