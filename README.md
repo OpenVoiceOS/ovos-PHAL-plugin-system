@@ -1,15 +1,16 @@
-# ovos-PHAL-plugin - system
+# ovos-PHAL-plugin-system
 
-Provides system specific commands to OVOS.
-The dbus interface for this plugin is not yet established.
+This PHAL plugin gives OpenVoiceOS commands to control the host system. It handles NTP sync, SSH, reboot, shutdown, factory reset, and language configuration through bus events. The plugin does not yet define a dbus interface.
 
-# Install
+## Install
 
-`pip install ovos-PHAL-plugin-system`
+```bash
+pip install ovos-PHAL-plugin-system
+```
 
-# Config
+## Config
 
-This plugin is a Admin plugin, it needs to run as root and to be explicitly enabled in mycroft.conf
+This plugin can run as an admin plugin. An admin plugin runs as root. To enable it, add this to `mycroft.conf`:
 
 ```javascript
 {
@@ -20,10 +21,12 @@ This plugin is a Admin plugin, it needs to run as root and to be explicitly enab
 }
 }
 ```
-if not enabled (omit config above) it will be run as the regular user, you need to ensure [polkit policy](#) is set to allow usage of systemctl without sudo.  Not yet implemented
 
+If you omit this config, the plugin runs as the regular user. In that case, you need a polkit policy that allows `systemctl` without `sudo`. This policy is not yet implemented.
 
-handle bus events to interact with the OS
+## Usage
+
+The plugin listens for these bus events and reacts to each one:
 
 ```python
 self.bus.on("system.ntp.sync", self.handle_ntp_sync_request)
@@ -37,3 +40,12 @@ self.bus.on("system.factory.reset.register", self.handle_reset_register)
 self.bus.on("system.configure.language", self.handle_configure_language_request)
 self.bus.on("system.mycroft.service.restart", self.handle_mycroft_restart_request)
 ```
+
+## Related projects
+
+- [OpenVoiceOS/ovos-PHAL](https://github.com/OpenVoiceOS/ovos-PHAL): the hardware abstraction layer that loads this plugin
+- [OpenVoiceOS/ovos-plugin-manager](https://github.com/OpenVoiceOS/ovos-plugin-manager): plugin loader and admin plugin support
+
+## License
+
+Apache-2.0

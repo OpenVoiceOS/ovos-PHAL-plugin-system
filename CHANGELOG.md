@@ -1,20 +1,64 @@
 # Changelog
 
-## [1.3.4a2](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/1.3.4a2) (2025-11-05)
+## [1.3.8a3](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/1.3.8a3) (2026-09-02)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/1.3.4a1...1.3.4a2)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/1.3.8a2...1.3.8a3)
 
 **Merged pull requests:**
 
-- Update ovos-plugin-manager version range to \<3.0.0 [\#57](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/57) ([JarbasAl](https://github.com/JarbasAl))
+- refactor: wipe runtime.conf on factory reset, drop deprecated config imports [\#70](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/70) ([JarbasAl](https://github.com/JarbasAl))
 
-## [1.3.4a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/1.3.4a1) (2025-06-18)
+## [1.3.8a2](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/1.3.8a2) (2026-07-31)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/V1.3.3...1.3.4a1)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/1.3.8a1...1.3.8a2)
 
-## [V1.3.3](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/V1.3.3) (2025-06-10)
+**Merged pull requests:**
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/1.3.3...V1.3.3)
+- docs: rewrite README in Simplified Technical English [\#71](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/71) ([JarbasAl](https://github.com/JarbasAl))
+
+## [1.3.8a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/1.3.8a1) (2026-06-16)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/1.3.7a2...1.3.8a1)
+
+**Merged pull requests:**
+
+- fix: require ovos-plugin-manager\>=2.1.0 for opm.\* entry points and cap ovos-\* deps at next major [\#68](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/68) ([JarbasAl](https://github.com/JarbasAl))
+
+## [1.3.7a2](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/1.3.7a2) (2026-06-16)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/1.3.7a1...1.3.7a2)
+
+**Merged pull requests:**
+
+- chore: add missing shared CI workflows [\#66](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/66) ([JarbasAl](https://github.com/JarbasAl))
+
+## [1.3.7a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/1.3.7a1) (2026-06-06)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/1.3.6a1...1.3.7a1)
+
+## [1.3.6a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/1.3.6a1) (2026-06-06)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/1.3.5a2...1.3.6a1)
+
+**Merged pull requests:**
+
+- fix\(deps\): allow ovos-bus-client 2.x \(widen cap to \<3.0.0\) [\#65](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/65) ([JarbasAl](https://github.com/JarbasAl))
+
+## [1.3.5a2](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/1.3.5a2) (2025-12-19)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/1.3.5a1...1.3.5a2)
+
+**Merged pull requests:**
+
+- Update dependency python to 3.14 [\#60](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/60) ([renovate[bot]](https://github.com/apps/renovate))
+
+## [1.3.5a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/1.3.5a1) (2025-12-18)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/1.3.4...1.3.5a1)
+
+**Merged pull requests:**
+
+- Configure Renovate [\#59](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/59) ([renovate[bot]](https://github.com/apps/renovate))
 
 
 

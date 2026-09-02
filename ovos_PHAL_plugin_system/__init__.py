@@ -1,7 +1,7 @@
 import os
 import shutil
 import subprocess
-from os.path import dirname, join
+from os.path import dirname, join, expanduser
 from threading import Event
 
 from json_database import JsonStorageXDG, JsonDatabaseXDG
@@ -9,8 +9,8 @@ from ovos_bus_client.apis.gui import GUIInterface
 from ovos_bus_client.message import Message
 from ovos_config.config import Configuration, update_mycroft_config
 from ovos_config.locale import set_default_lang
-from ovos_config.locations import OLD_USER_CONFIG, USER_CONFIG, WEB_CONFIG_CACHE
-from ovos_config.meta import get_xdg_base
+from ovos_config.locations import ASSISTANT_CONFIG, USER_CONFIG, WEB_CONFIG_CACHE
+from ovos_config.meta import get_xdg_base, get_config_filename
 from ovos_plugin_manager.phal import AdminPlugin, PHALPlugin
 from ovos_plugin_manager.templates.phal import PHALValidator, AdminValidator
 from ovos_utils import classproperty
@@ -145,10 +145,19 @@ class SystemEventsPlugin(PHALPlugin):
 
         wipe_cfg = message.data.get("wipe_configs", True)
         if wipe_cfg:
-            if os.path.isfile(OLD_USER_CONFIG):
-                os.remove(OLD_USER_CONFIG)
+            # pre-XDG config location, kept for devices upgraded from old
+            # releases; ovos_config.locations.OLD_USER_CONFIG is deprecated
+            # so we reproduce its definition locally instead of importing it
+            old_user_config = join(expanduser('~'), '.' + get_xdg_base(),
+                                   get_config_filename())
+            if os.path.isfile(old_user_config):
+                os.remove(old_user_config)
             if os.path.isfile(USER_CONFIG):
                 os.remove(USER_CONFIG)
+            # runtime changes OVOS itself made at runtime (ovos-config#194)
+            if os.path.isfile(ASSISTANT_CONFIG):
+                os.remove(ASSISTANT_CONFIG)
+            # stale remote config cache from the deprecated web_cache stack
             if os.path.isfile(WEB_CONFIG_CACHE):
                 os.remove(WEB_CONFIG_CACHE)
 
