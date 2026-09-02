@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.8a3](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/1.3.8a3) (2026-09-02)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/1.3.8a2...1.3.8a3)
+
+**Merged pull requests:**
+
+- refactor: wipe runtime.conf on factory reset, drop deprecated config imports [\#70](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/pull/70) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [1.3.8a2](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/tree/1.3.8a2) (2026-07-31)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-system/compare/1.3.8a1...1.3.8a2)
