@@ -13,7 +13,8 @@ authors = [
 ]
 dependencies = [
     "ovos-plugin-manager>=2.1.0,<3.0.0",
-    "ovos-bus-client>=1.1.0,<3.0.0"
+    "ovos-bus-client>=1.1.0,<3.0.0",
+    "ovos-config>=3.0.0a1,<4.0.0"
 ]
 
 [project.urls]
